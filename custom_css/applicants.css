@@ -1,0 +1,50 @@
+.getCSV, .getExcel, .getCSV:hover, .getExcel:hover {
+	background-color: #208c82;
+	padding: 10px;
+	border-radius: .5rem;
+	text-decoration: none;
+	cursor: pointer;
+	color: #ffffff;
+	border: 1px solid #00887b;
+	box-shadow: 0 5px 10px 0 #808080;
+}
+.getCSV:active, .getExcel:active, .getCSV:visited, .getExcel:visited {
+	background-color: #196f67;
+	border: 1px solid #025850;
+	box-shadow: 0 5px 10px 0 #353535;
+}
+#search-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	margin: 20px 0 40px;
+}
+#search {
+	border-width: 0 0 1px 0 !important;
+	border: 1px solid #b7b7b7;
+	background: transparent;
+	width: 0;
+	color: #313131;
+	font-size: 30px;
+	-webkit-transition: 0.4s ease-in-out;
+	transition: 0.4s ease-in-out;
+}
+#search-icon {
+	background: url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-128.png);
+	background-position: center;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+}
+center {
+	margin-bottom: 40px;
+}
+table tbody tr {
+	cursor: pointer;
+}
+table th, table tbody {
+	text-align:left!important;
+}

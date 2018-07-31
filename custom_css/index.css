@@ -1,0 +1,444 @@
+/*custom css for index.php*/
+  
+  /*@import "compass/css3";*/
+	label {
+		color: #000000 !important
+	}
+	.msg-block {
+	 	 margin-right: 145px;
+	}
+	div.help-block.with-error{
+		color: text-danger;
+	}
+	form.ng-minlength {
+	    background-color:red;
+	}
+
+	/* The switch - the box around the slider */
+	.switch {
+	  position: relative;
+	  display: inline-block;
+	  width: 40px;
+	  height: 25px;
+	}
+
+	/* Hide default HTML checkbox */
+	.switch input {display:none;}
+
+	/* The slider */
+	.slider {
+	  position: absolute;
+	  cursor: pointer;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #ccc;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	.slider:before {
+	  position: absolute;
+	  content: "";
+	  height: 19px;
+	  width: 19px;
+	  left: 3px;
+	  bottom: 3px;
+	  background-color: white;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	.img{
+		position: absolute;
+		top: 150px;
+		left: 8%;
+		right: 5%;
+		z-index: 0;
+		background-attachment: fixed;
+		background-position: center;
+	}
+
+	input.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	    color: #000000;
+	}
+
+	input.form-control.date{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	    color: #000000;
+	}
+
+	input#placeofbirth.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input#curaddress.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input#provaddress.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input#mplace_birth.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input#fplace_birth.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input.fakeinput.select.form-control{
+	 	background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	textarea.form-control{
+		background: rgb(255, 255, 255); /* Fallback for older browsers without RGBA-support */
+	    background: rgba(255, 255, 255, 0.5);
+	}
+
+	input:checked + .slider {
+	  background-color: #2196F3;
+	}
+
+	input:focus + .slider {
+	  box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked + .slider:before {
+	  -webkit-transform: translateX(16px);
+	  -ms-transform: translateX(16px);
+	  transform: translateX(16px);
+	}
+
+	input:text {
+		color: black;
+	}
+
+	button.btn.btn-raised.btn-primary.pull-right{
+		z-index: 1;
+	}
+
+	/* Rounded sliders */
+	.slider.round {
+	  border-radius: 34px;
+	}
+
+	.slider.round:before {
+	  border-radius: 50%;
+	}
+
+	/* Hover in fresh/work exp.*/
+	.btn-default:hover{
+	  color: #fff;
+	  background-color: #0066ff;
+      border-color: #285e8e; 
+	}
+
+	#case_icon{
+	  	color:black;
+	}
+
+	.active #case_icon{
+	  	color:white;
+	}
+
+	#btn_freshgrad,
+	#btn_experienced,
+	#btn_intern
+        {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	width:48%;
+	}
+
+	.active {
+		background-color: #0066ff !important;
+		border-style: solid;
+		color:white;
+		border-color: #4286f4 #0000ff;
+	}
+	.popdialog{
+		width:35%;
+	}
+	@media screen and (min-width: 320px) {
+	.popdialog{
+		width:90%;
+	}
+	#exp_text{
+		font-size:9px;
+		margin-left:-8%;
+	}	
+	#fresh_grad{
+		font-size:10px;
+		margin-left:-8%;
+	}
+	#intern_ship{
+        font-size:12px;
+	}
+	#ARMS{
+		font-size:13px;
+	}
+	.logo{
+		height:100px;
+		width:40%;
+		margin-bottom:-1%;
+	}
+	}
+	@media screen and (min-width: 360px) {
+	.popdialog{
+		width:90%;
+	}
+	#exp_text{
+		font-size:11px;
+		margin-left:-8%;
+	}
+	#fresh_grad{
+		font-size:12px;
+		margin-left:-8%;
+	}
+	#intern_ship{
+        font-size:14px;
+	}
+	#ARMS{
+		font-size:13px;
+	}
+	.logo{
+		height:100px;
+		width:40%;
+		margin-bottom:-1%;
+	}
+	}
+	@media screen and (min-width: 375px) {
+	#exp_text{
+		font-size:12px;
+		margin-left:-8%;
+	}
+	#fresh_grad{
+		font-size:12px;
+		margin-left:-8%;
+	}
+	#intern_ship{
+        font-size:12px;
+	}
+	#ARMS{
+		font-size:13px;
+	}
+	.logo{
+		height:100px;
+		width:40%;
+		margin-bottom:-1%;
+	}
+	}
+	@media screen and (min-width: 412px) {
+	#exp_text{
+		font-size:13px;
+		margin-left:-8%;
+	}
+	#fresh_grad{
+		font-size:13px;
+		margin-left:-8%;
+	}
+	#intern_ship{
+        font-size:13px;
+	}
+	#ARMS{
+		font-size:15px;
+	}
+	.logo{
+		height:100px;
+		width:40%;
+		margin-bottom:-1%;
+	}
+	}
+	@media screen and (min-width: 768px) {
+	#exp_text{
+		font-size:17px;
+		margin-left:0%;
+	}
+	#fresh_grad{
+		font-size:17px;
+		margin-left:0%;
+	}
+	#intern_ship{
+        font-size:17px;
+	}
+	#ARMS{
+		font-size:13px;
+	}
+	.logo{
+		height:100px;
+		width:30%;
+		margin-bottom:-1%;
+	}
+	}
+
+	@media screen and (min-width: 1024px) {
+	.popdialog{
+		width:38%;
+	}
+	#exp_text{
+		font-size:17px;
+		margin-left:0%;
+	}
+	#fresh_grad{
+		font-size:17px;
+		margin-left:0%;
+	}
+	#intern_ship{
+        font-size:17px;
+	}
+	#ARMS{
+		font-size:13px;
+	}
+	.logo{
+		height:100px;
+		width:20%;
+		margin-bottom:-1%;
+	}
+	}
+	@media (min-width: 768px) and (max-width: 1350px) {
+	.popdialog{
+		width:38%;
+	}
+	.logo{
+		height:150px;
+		width:20%;
+		margin-bottom:-1%;
+	}
+		#exp_text{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#fresh_grad{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#intern_ship{
+        font-size:15px;
+	}
+	#ARMS{
+		font-size:20px;
+	}
+	}
+	@media (min-width: 1366px) and (max-width: 1450px) {
+	.popdialog{
+		width:38%;
+	}
+	.logo{
+		height:180px;
+		width:20%;
+		margin-bottom:-1%;
+	}
+	#exp_text{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#fresh_grad{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#intern_ship{
+        font-size:15px;
+     	margin-left:0%;
+	}
+	#ARMS{
+		font-size:20px;
+	}
+	}
+
+	@media (min-width: 1500px) and (max-width: 1920px) {
+	.popdialog{
+		width:38%;
+	}
+	.logo{
+		height:160px;
+		width:20%;
+		margin-bottom:-1%;
+	}
+	#exp_text{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#fresh_grad{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#intern_ship{
+		font-size:15px;
+		margin-left:0%;
+	}
+	#ARMS{
+		font-size:20px;
+	}
+}
+	.strike {
+		display: block;
+		text-align: center;
+		overflow: hidden;
+		white-space: nowrap; 
+    }
+	.strike > span {
+        position: relative;
+        display: inline-block;
+    }
+	.strike > span:before,
+    .strike > span:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9999px;
+        height: 1px;
+        background: #DCDCDC;
+    }
+    .strike > span:before {
+        right: 100%;
+        margin-right: 15px;
+    }
+	.strike > span:after {
+        left: 100%;
+        margin-left: 15px;
+    }
+	#ref_code{
+		font-weight: bold;
+		text-align:center;
+	}
+	.modal-backdrop {
+    	opacity:0.93 !important;;
+	}
+	#footer{
+		font-size:12px;
+		margin-top:3%;
+	}
+	body{
+		font-family: 'Open Sans', sans-serif;
+		background-image: url('../lady liberty.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center; 
+		background-size: 100%;
+	}
+	.fade-scale {
+	  transform: scale(0);
+	  opacity: 0;
+	  -webkit-transition: all .5s linear;
+	  -o-transition: all .5s linear;
+	  transition: all .5s linear;
+	}
+	.fade-scale.in {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+
+
+/*end custom css for index.php*/

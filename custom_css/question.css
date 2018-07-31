@@ -1,0 +1,74 @@
+/*custom css for question.php*/
+
+	/*input style*/
+	.gap{
+		margin-bottom: 5px;
+	}
+	.text {
+	    width: 1080px;
+	    background-color: #ddd;
+	     /*shorthand for margin: 0 auto 0 auto; which  is shorthand for specifying each caption-side individually */
+	    margin: 0 auto;
+	    text-align: center;
+	}
+	.img{
+		position: absolute;
+		top: 550px;
+		left: 8%;
+		right: 5%;
+		z-index: 0;
+		background-attachment: fixed;
+		background-position: center;
+	}
+	.commentBox {
+		width: 400px;
+		height: 1000px;
+		color: solid black;
+		margin: 1.5 auto;
+	}
+	input[type="text"]{
+		margin: 3px auto;
+	}
+	input[type=checkbox] 
+	{
+    /* All browsers except webkit*/
+        transform: scale(1.5);
+    /* Webkit browsers*/
+       -webkit-transform: scale(1.5);
+    }
+    .paddingClass{
+        margin:10px;
+        padding:5px;
+    }
+    [type="checkbox"]{
+    	vertical-align: middle;
+    }
+	/* New Form */
+	.reveal-if-active {
+		opacity: 0;
+		max-height: 0;
+		overflow: hidden;
+	}
+	input[type="radio"]:checked ~ .reveal-if-active,
+	input[type="checkbox"]:checked ~ .reveal-if-active {
+		opacity: 1;
+		max-height: 100px;
+		overflow: visible;
+	}
+	.reveal-if-active {
+	  opacity: 0;
+	  max-height: 0;
+	  overflow: hidden;
+	  transform: scale(0.8);
+	  transition: 0.5s;
+	  input[type="radio"]:checked ~ &,
+	  input[type="checkbox"]:checked ~ & {
+		opacity: 1;
+		max-height: 100px;
+		overflow: visible;
+		padding: 10px 20px;
+		transform: scale(1);
+	  }
+	}
+}
+/*end of question.php custom css*/
