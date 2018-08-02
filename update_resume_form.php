@@ -1395,7 +1395,7 @@ while($row = $resultS->fetch_assoc()){
 								<br>
 
 								<?php if($app_stat=='grad')echo'<h2>FRESH GRADUATE</h2>';else if($app_stat=='exp') {echo"<h2>EXPERIENCED CANDIDATE</h2>";} else echo"<h2>INTERN</h2>";?>
-
+								
 							</div>
 
 						</div>
@@ -1403,7 +1403,7 @@ while($row = $resultS->fetch_assoc()){
 				
 
 				</div>
-
+				
 								
 
 								
@@ -1670,7 +1670,7 @@ while($row = $resultS->fetch_assoc()){
 
 							  <label>
 
-								<input type="radio" name="sex123" id="s1" value="Preferred not to answer" <?php if($gender=="Preferred")echo'checked';?>>
+								<input type="radio" name="sex123" id="s1" value="Preferred not to answer" <?php if($gender=="Preferred not to answer")echo'checked';?>>
 
 								Preferred not to answer
 
@@ -1694,13 +1694,13 @@ while($row = $resultS->fetch_assoc()){
 
 						<div class="form-group label-floating ">
 
-							<label for="date-ofbirth" class="control-label"><i class="fa fa-calendar" ></i> Date of Birth <label class="text-danger">*</label></label>
+							<label for="date-ofbirth" class="control-label"><i class="fa fa-calendar" ></i> Date of Birth </label>
 
 							
 
 							<div class="input-group" id="datePicker">
 
-								<input data-provide="datepicker" style="color: transparent;text-shadow: 0 0 0 black;" name="bday123" id="bday123" value ="<?php echo $bday;?>" class="form-control date" data-date-end-date="-17y" data-date-autoclose="true" onkeydown="return false;" data-date-format="MM dd, yyyy" required>
+								<input data-provide="datepicker" style="color: transparent;text-shadow: 0 0 0 black;" name="bday123" id="bday123" value ="<?php echo $bday;?>" class="form-control date" data-date-end-date="-17y" data-date-autoclose="true" onkeydown="return false;" data-date-format="MM dd, yyyy">
 
 								<span class="input-group-addon add-on"><a href="" onclick="$('#bday123').focus();"><span class="fa fa-calendar"></span></a>
 
@@ -1708,7 +1708,7 @@ while($row = $resultS->fetch_assoc()){
 
 								</div>
 
-								<div class="help-block with-errors" style="color: red"></div>
+								<!-- <div class="help-block with-errors" style="color: red"></div> -->
 
 						</div>
 
@@ -2380,7 +2380,7 @@ while($row = $resultS->fetch_assoc()){
 						<script>
 
 							//document.getElementById("#celno").val("09");
-
+							
 							var xxx = document.getElementById("#celno");
 
 						</script>
@@ -3535,14 +3535,15 @@ while($row = $resultS->fetch_assoc()){
 			<div class="card container" id = "container4" style="display:none;">
 
 				<img class="img" src="lady liberty.png" style=" width: 85%;">
-
+				<div id='workfield'>
 				<h6 style="padding-top: 30px"><i class="fa fa-briefcase"> </i><b> WORK EXPERIENCE <small>(Most recent on top)</small></b></h6>  
 				<hr>
-
+											  
 						<button type="button" id="btnwork" class="btn btn-raised btn-sm btn-info add_field_button_work">Add Work Experience</button>
 
 				
 				<br>
+				</div>
 				<?php 
 
 					include('connect.php');
@@ -4536,7 +4537,7 @@ while($row = $resultS->fetch_assoc()){
 
 								  <label class="control-label" for="monthly-salary">Monthly salary</label>
 
-								  <input class="form-control" type="number"  name="salary" id="monthlysalary">
+								  <input class="form-control" type="text"  name="salary" id="monthlysalary" onkeypress= "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
 
 								  <div class="help-block with-errors" style="color: red"></div>
 
