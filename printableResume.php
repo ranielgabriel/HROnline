@@ -34,8 +34,12 @@ class PDF extends FPDF{
 	
 }
 	$id = $_GET['id'];
-	$selectID = "SELECT *FROM tbl_application WHERE id = '$id'";
+	// $selectID = "SELECT *FROM tbl_application WHERE id = '$id'";
+	$selectID = "SELECT * FROM tbl_application INNER JOIN tbl_languages ON tbl_application.ID = tbl_languages.ID WHERE tbl_application.id = '$id'";
 	$resultSelect = $conn->query($selectID);
+
+	// echo '<script>console.log(' . json_encode(mysqli_fetch_array($resultSelect)) . ');</script>';
+
 	while($data = mysqli_fetch_array($resultSelect)){
 	//$app_date = date("F d, Y", strtotime($data['Timestamp']);
 		
@@ -564,6 +568,13 @@ class PDF extends FPDF{
 				echo	$pdf->Cell(75, 5, $language[$lang.'WRITE'],0,1);
 				}
 			}
+
+	// echo '<script>console.log('. $languages[0] .');</script>';
+	// echo '<script>console.log('. $languages[1] .');</script>';
+	// echo '<script>console.log('. $languages[2] .');</script>';
+	// echo '<script>console.log('. $languages[3] .');</script>';
+	// echo '<script>console.log('. $languages[4] .');</script>';
+
 	$pdf->Cell(59, 5, '',0,1);
 	$pdf->SetFont('Arial','B',12);
 	$pdf->Cell(10, 5, 'Other Information',0,1,"L");//END OF LINE
@@ -860,6 +871,8 @@ class PDF extends FPDF{
 				    
 		
 		$pdf->Output();
+
+
 
 	}
 
