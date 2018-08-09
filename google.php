@@ -647,7 +647,7 @@ ul {
 										if($row['Status'] != 'Declined'){
 											echo"<td><span id ='".$row['Source']."".$row['ID']."note' >".$row['note']."</span></td>";
 										} else { echo"<td><span  style='color: red' id ='".$row['Source']."".$row['ID']."note' >".$row['note']."</span></td>";}
-
+												// <td style='padding-top:23px'><span id='span".$row['ID']."' style='color:white; font-size: 105%;' class='".$class."' >".$row['Status']."</span>
 										echo"<td style='padding-top:23px'><span id='span".$row['ID']."' style='color:white; font-size: 105%;' class='".$class."' >".$row['Status']."</span>
 
 												</td>
@@ -668,12 +668,20 @@ ul {
 
 												<button title='Schedule' class='btn btn-raised btn-sm btn-primary schedulebtn' data-name='".$row['Name']."' data-id='".$row['Source'].",".$row['ID'].",".$row['Status'].",schedule'><i class='	fa fa-calendar-check-o'></i></button>
 
-												<button title='Notes' class='btn btn-raised btn-sm btn-primary commentbtn' data-toggle='modal' data-target ='#commentModal' data-name='".$row['Name']."' data-id='".$row['Source'].",".$row['ID']."' ><i class='fa fa-comment-o'></i></button>
+												<button title='Notes' class='btn btn-raised btn-sm btn-primary notebtn' data-toggle='modal' data-target ='#noteModal' data-name='".$row['Name']."' data-id='".$row['Source'].",".$row['ID']."' ><i class='fa fa-sticky-note-o'></i></button>";
+										
 
-												</div></td>
+										if (($row['Status'] == 'Initial Interview') ||
+										($row['Status'] == 'Second Interview') ||
+										($row['Status'] == 'Third Interview') ||
+										($row['Status'] == 'Final Interview')){
+											echo"<button title='Comment' id='commentbutton' class='btn btn-raised btn-sm btn-success commentbtn' data-toggle='modal' data-target ='#commentModal' data-name='".$row['Name']."' data-id='tbl_interview,".$row['ID']. ',' . $row['ReferenceCode'] . "' ><i class='fa fa-comment-o'></i></button></div></td></tr>";
+										} else {
+											echo"</div></td>
 
 											 </tr>";
-
+										}
+										
 									
 
 								}
@@ -1124,6 +1132,73 @@ ul {
 	<!--Comment Modal -->
 
 	<div id="commentModal" class="modal fade" role="dialog" style="padding-top: 5%">
+		
+		<div class="col-md-6">
+			<div class="modal-dialog">
+			
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #00008B; color:white">
+
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+						<h4 class="modal-title"><i class="fa fa-comment"></i> Comment</h4><br>
+
+					</div>
+
+					<div class="modal-body">
+								
+						<div class="form-group">
+
+							<div class="form-group">
+
+								<label for="comment">Write comment:</label>
+
+								<textarea class="form-control" rows="5" id="commentValue"></textarea>
+
+							</div>
+
+						</div>
+
+						<input type="hidden" name="imfrom" value='google'>
+
+					</div>
+
+					<div class="modal-footer">
+
+						<button style="background-color: #00008B" class="btn btn-raised btn-warning btn-sm" class="form-control" id="commentMod" type="submit">OK</button>
+
+						<button class='btn btn-sm btn-raised btn-default' data-dismiss='modal'>Cancel</button>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-6" id="infooo">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"> Informations </h4>
+					</div>
+					<!-- modal body -->
+					<div class="modal-body">
+						<p id="rightinfo" ></p>
+						
+					</div>
+					<!-- modal footer -->
+					<div class="modal-footer">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!-- Note Modal -->
+	<div id="noteModal" class="modal fade" role="dialog" style="padding-top: 5%">
 
 	  <div class="modal-dialog">
 
@@ -1133,7 +1208,7 @@ ul {
 
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-	        <h4 class="modal-title"><i class="fa fa-comment"></i> Note</h4><br>
+	        <h4 class="modal-title"><i class="fa fa-sticky-note"></i> Note</h4><br>
 
 	      </div>
 
@@ -1147,9 +1222,9 @@ ul {
 
 					<div class="form-group">
 
-					  <label for="comment">Note:</label>
+					  <label for="comment">Write note:</label>
 
-					  <textarea class="form-control" rows="5" id="commentValue"></textarea>
+					  <textarea class="form-control" rows="5" id="noteValue"></textarea>
 
 					</div>
 
@@ -1161,7 +1236,7 @@ ul {
 
 	      <div class="modal-footer">
 
-	      	<button style="background-color: #00008B" class="btn btn-raised btn-warning btn-sm" class="form-control" id="commentMod" type="submit">OK</button>
+	      	<button style="background-color: #00008B" class="btn btn-raised btn-warning btn-sm" class="form-control" id="noteMod" type="submit">OK</button>
 
 	        <button class='btn btn-sm btn-raised btn-default' data-dismiss='modal'>Cancel</button>
 
@@ -1319,7 +1394,7 @@ ul {
 
 				</div>
 
-				<input type="hidden" name="imfrom" value='google'>
+				<input type="text" name="imfrom" value='google'>
 
 	      </div>
 
@@ -1849,7 +1924,6 @@ var waitingDialog = waitingDialog || (function ($) {
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-
 		$(document).ready(function(){
 
 
@@ -2017,45 +2091,43 @@ var waitingDialog = waitingDialog || (function ($) {
 					}
 				});
 			}); */
-			///	Comment
+			///	Note submit function
 
-			$('#commentMod').click(function(){
+			$('#noteMod').click(function(){
 
-				$.ajax({
+					$.ajax({
 
-					url: 'query.php',
+						url: 'query.php',
 
-					type: 'POST',
+						type: 'POST',
 
-					dataType: 'html',	
+						dataType: 'html',	
 
-					data:{ID: commentID[1], Table:commentID[0] , comment: 1,value:$('#commentValue').val()},
+						data:{ID: noteID[1], Table:noteID[0] , note: 1,value:$('#noteValue').val()},
 
-					success:function (data){
+						success:function (data){
 
-						$('#commentModal').modal('toggle');
+							$('#noteModal').modal('toggle');
 
-						$('#'+commentID[0]+''+commentID[1]+'note').html($('#commentValue').val());
+							$('#'+noteID[0]+''+noteID[1]+'note').html($('#noteValue').val());
 
-					},
+						},
 
-					error: function(data){
+						error: function(data){
 
-						alert(data);	
+							alert(data);	
 
-					}	
+						}	
+
+					});
 
 				});
 
-				
+			// note modal
+			$('.notebtn').click(function(){
 
-			});
+				noteID = $(this).data('id').split(',');
 
-			$('.commentbtn').click(function(){
-
-				commentID = $(this).data('id').split(',');
-
-		
 
 				$.ajax({
 
@@ -2065,11 +2137,11 @@ var waitingDialog = waitingDialog || (function ($) {
 
 					dataType: 'html',
 
-					data:{ID: commentID[1],Table:commentID[0], commentValue: 1},
+					data:{ID: noteID[1],Table:noteID[0], noteValue: 1},
 
 					success:function (data){
 
-						$('#commentValue').val(data);
+						$('#noteValue').val(data);
 
 						
 
@@ -2086,11 +2158,138 @@ var waitingDialog = waitingDialog || (function ($) {
 			});
 
 			
+			/// Comment submit function
+			$('#commentMod').click(function(){
+				
+				$.ajax({
 
+					url: 'query.php',
 
+					type: 'POST',
+
+					dataType: 'html',	
+
+					data:{ID: commentID[1],
+						 Table:commentID[0],
+						 comment: 1,
+						 value: $('#commentValue').val(),
+						 ReferenceCode: commentID[2],
+						 Stage: $("#span" + commentID[1]).html()},
+
+					success:function (data){
+
+						$('#commentModal').modal('toggle');
+						
+						// $('#'+commentID[0]+''+commentID[1]+'comment').html($('#commentValue').val());
+
+					},
+
+					error: function(data){
+
+						alert(data);	
+
+					}	
+
+					});
+
+			});
 
 			
+// 			// Comment modal
+			$('.commentbtn').click(function(){
 
+				commentID = $(this).data('id').split(',');
+
+				// console.log($("#span" + commentID[1]).html() + commentID[2]);
+
+				$.ajax({
+
+					url: 'query.php',
+
+					type: 'POST',
+
+					dataType: 'html',
+
+					data:{ID: commentID[1],Table:commentID[0], commentValue: 1, Stage: $("#span" + commentID[1]).html(), information: 1},
+
+					success:function (data){
+
+						$('#commentValue').val(data);
+						// $('#rightinfo').html(data);
+						
+
+					},
+
+					error: function(data){
+
+						alert(data);	
+
+					}	
+
+				});	
+
+			});
+			$('.commentbtn').click(function(){
+
+				commentID = $(this).data('id').split(',');
+
+				// console.log($("#span" + commentID[1]).html() + commentID[2]);
+
+				$.ajax({
+
+					url: 'query.php',
+
+					type: 'POST',
+
+					dataType: 'html',
+
+					data:{ID: commentID[1],Table:commentID[0], commentValue: 1, Stage: $("#span" + commentID[1]).html()},
+
+					success:function (data){
+
+						$('#commentValue').val(data);
+						// $('#rightinfo').html(data);
+						
+
+					},
+
+					error: function(data){
+
+						alert(data);	
+
+					}	
+
+				});	
+
+				$.ajax({
+
+					url: 'query.php',
+
+					type: 'POST',
+
+					dataType: 'html',
+
+					data:{ID: commentID[1],Table:commentID[0], Stage: $("#span" + commentID[1]).html(), information: 1},
+
+					success:function (data){
+
+						// $('#commentValue').val(data);
+						$('#rightinfo').html(data);
+						
+
+					},
+
+					error: function(data){
+
+						alert(data);	
+
+					}	
+
+				});	
+
+			});
+
+			
 			
 
 			////Sending interview
@@ -2192,7 +2391,7 @@ var waitingDialog = waitingDialog || (function ($) {
 					sched = interviewDate +' '+interviewTime;
 
 					$('#type').val('interview');
-
+	
 					if(checkTblApplication.length>0){
 
 					actionfunction('tbl_application',checkTblApplication);				
@@ -3099,7 +3298,7 @@ var waitingDialog = waitingDialog || (function ($) {
 		}
 
 /*--END--*/		
-
+		
 
 
 		function actionfunction(nameTbl,myArray) {	///////status and stage algorithm

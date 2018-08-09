@@ -91,7 +91,9 @@ $("#question1").on('keydown', function(e) {
 				document.getElementById("app_stat").value = 'exp';
     		});
 $( "#agreement" ).on( "click", function() {
+
 		var apply_position = document.getElementById("apply_position").value;
+
 		//var apply_position1 = document.getElementById("apply_position1").value;
 		var lastName = document.getElementById("lname").value;
 		var firstName = document.getElementById("fname").value;
@@ -196,7 +198,7 @@ $( "#agreement" ).on( "click", function() {
 			// 	document.getElementById("container2").style.display="block";
 			// }
 		}
-		 
+
 });
 $("#apply_position").on('change',function(e){
 	$('#position_data').attr('value',$(this).val());
@@ -482,6 +484,7 @@ $( "#cstatus" ).on( "change", function() {
 $( "#apply_position" ).on( "change", function() {
 	var apply_position1 = document.getElementById("apply_position").value;
 	document.getElementById("positionErrorMessage").style.display = 'none';
+	// document.getElementById("apply_position").style.borderColor = "black";
 	if(apply_position1=='Select Position'){
 		document.getElementById("positionErrorMessage").style.display = 'block';
 		document.getElementById("apply_position").style.borderColor = "red";

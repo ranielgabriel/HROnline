@@ -389,7 +389,8 @@
 		echo $_SESSION['googlequery'];
 		}
 }	
-if(isset($_POST['comment'])){
+//Note
+if(isset($_POST['note'])){
 	$ID = $_POST['ID'];
 	$value = $_POST['value'];
 	$table = $_POST['Table'];
@@ -401,7 +402,7 @@ if(isset($_POST['comment'])){
 		}
 }
 	
-if(isset($_POST['commentValue'])){
+if(isset($_POST['noteValue'])){
 	$ID = $_POST['ID'];
 	$table = $_POST['Table'];
 	$sql = "select note from ".$table." where id = '".$ID."'";
@@ -410,7 +411,72 @@ if(isset($_POST['commentValue'])){
 		 echo $row['note'];
 	
 }
-	if(isset($_POST['schedValue'])){
+
+//Comment
+if(isset($_POST['comment'])){
+	$ID = $_POST['ID'];
+	$value = $_POST['value'];
+	$table = $_POST['Table'];
+	$stage = $_POST['Stage'];
+	$referenceCode = $_POST['ReferenceCode'];
+
+		$sqlUpdate = "UPDATE $table SET Comment = '$value' WHERE ReferenceNo = '$referenceCode' AND InterviewStage = '$stage'";
+		echo '<script>console.log(' . $sqlUpdate . ')</script>';
+		$result2 = $conn->query($sqlUpdate);
+		if($result2){
+			echo 'success Update';
+		}
+}
+	
+if(isset($_POST['commentValue'])){
+	$ID = $_POST['ID'];
+	$table = $_POST['Table'];
+	$stage = $_POST['Stage'];
+	$sql = 'SELECT tbl_interview.Comment, tbl_application.REFERENCE_NO, tbl_application.id FROM tbl_interview INNER JOIN tbl_application ON tbl_interview.ReferenceNo = tbl_application.REFERENCE_NO WHERE tbl_interview.InterviewStage = \''. $stage .'\' AND tbl_application.id = ' . $ID;
+
+	// echo '<script>console.log(' . $sql . ')</script>';
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
+		echo $row['Comment'];
+	
+}
+
+if(isset($_POST['information'])){
+	$ID = $_POST['ID'];
+	$table = $_POST['Table'];
+	$stage = $_POST['Stage'];
+	//$sql = 'SELECT tbl_application.`1.1 Employer's Name, Address and Phone`, tbl_application.Name, tbl_application.Position, tbl_application.SALARY, tbl_application.SHIFTING_SCHEDULE, tbl_application.CONTRACTUAL_EMPLOYMENT, tbl_application.WEEKENDS_HOLIDAYS, tbl_application.APPLICATION_SOURCE, tbl_application.REFERENCE_NO, tbl_application.id FROM tbl_interview INNER JOIN tbl_application ON tbl_interview.ReferenceNo = tbl_application.REFERENCE_NO WHERE tbl_interview.InterviewStage = \''. $stage .'\' AND tbl_application.id = ' . $ID;
+	$sql = 'SELECT * FROM tbl_interview INNER JOIN tbl_application ON tbl_interview.ReferenceNo = tbl_application.REFERENCE_NO WHERE tbl_interview.InterviewStage = \''. $stage .'\' AND tbl_application.id = ' . $ID;
+	// echo '<script>console.log(' . $sql . ')</script>';
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
+		echo '<b>Position:</b> ' . $row['POSITION']."<br>";
+		echo '<b>Name:</b> ' . $row['NAME']."<br>";
+		echo '<b>Expected Salary:</b> ' . $row['SALARY']."<br>";
+		echo '<b>Shifting Schedule:</b> ' . $row['SHIFTING_SCHEDULE']."<br>";
+		echo '<b>Contractual Employment:</b> ' . $row['CONTRACTUAL_EMPLOYMENT']."<br>";
+		echo '<b>Weekends holidays:</b> ' . $row['WEEKENDS_HOLIDAYS']."<br>";
+		echo '<b>Application Source:</b> ' . $row['APPLICATION_SOURCE']."<br>";
+		// WORK EXPERIENCES IF ISSET
+		if($row['1.1 Employer\'s Name, Address and Phone'] != ""){
+			echo "<h4> Work Experience </h4>
+						<div class='col-md-12'>";
+		
+			for( $counter = 1; $counter < 6; $counter++){
+				if($row[$counter.'.1 Employer\'s Name, Address and Phone'] != ""){
+
+				echo "<b>". $counter .".)</b> ". $row[$counter.'.1 Employer\'s Name, Address and Phone'];
+							
+				}
+			}
+			echo "</div>";
+
+		}
+		
+		
+}
+
+if(isset($_POST['schedValue'])){
 	$ID = $_POST['ID'];
 	$table = $_POST['Table'];
 	$sql = "select schedule from ".$table." where id = '".$ID."'";

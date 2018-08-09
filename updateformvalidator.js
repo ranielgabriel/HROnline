@@ -73,8 +73,7 @@ $("#question1").on('keydown', function(e) {
 				$("button").removeClass("active");
 				$(this).addClass("active");
 				document.getElementById("app_stat").value = 'exp';
-			});
-			
+    		});
 $( "#apply_position" ).on( "change", function() {
 	var apply_position1 = document.getElementById("apply_position").value;
 	document.getElementById("positionErrorMessage").style.display = 'none';
@@ -83,16 +82,13 @@ $( "#apply_position" ).on( "change", function() {
 		document.getElementById("apply_position").style.borderColor = "red";
 	}
 });
-
-
 $( "#fnext" ).on( "click", function() {
- 		 var apply_position = document.getElementById("apply_position").value;
+  var apply_position = document.getElementById("apply_position").value;
 		var lastName = document.getElementById("lname").value;
 		var firstName = document.getElementById("fname").value;
 		var employ_date = document.getElementById("empdate").value;
 		var date_ofbirth = document.getElementById("bday123").value;
 		var placeofbirth = document.getElementById("placeofbirth").value;
-		
 		
 		function fnext_required(){
 			$("#apply_position").blur();
@@ -115,6 +111,9 @@ $( "#fnext" ).on( "click", function() {
 		}else if(employ_date==""){
 			fnext_required();
 			$("#empdate").focus();
+		}else if(date_ofbirth==""){
+			fnext_required();
+			$("#bday123").focus();
 		}else if(placeofbirth==""){
 			fnext_required();
 			$("#placeofbirth").focus();
@@ -303,15 +302,7 @@ $( "#frnext" ).on( "click", function() {
 		$('#monthlysalary').attr('required', false);
 		document.getElementById('container4').style.display='none'; 
 		document.getElementById('container5').style.display='block';
-	} else {
-		$('#employers_name1').attr('required', false);
-		$('#employers_address').attr('required', false);
-		$('#position-title').attr('required', false);
-		$('#reason').attr('required', false);
-		$('#monthlysalary').attr('required', false);
-		document.getElementById('container4').style.display = 'none';
-		document.getElementById('container5').style.display = 'block';
-	}
+}
 });
 
 
