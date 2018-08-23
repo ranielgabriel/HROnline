@@ -4,6 +4,7 @@
 	$_SESSION['previous-page'] = 'google.php';
 	$id = isset($_GET['id']) ? $_GET['id']:'';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,15 @@
 	<link rel = "stylesheet" type = "text/css" href = "css/buttons.dataTables.min.css">
 	<link rel = "stylesheet" type = "text/css" href = "css/buttons.dataTables.css">
 	<link rel = "stylesheet" type = "text/css" href = "css/jquery.dataTables.min.css">
+
+<?php
+	$id = $_SESSION['id'];
+	include('connect.php');
+	$sql = "SELECT * FROM tbl_admin WHERE id = '$id'";
+	$result = $conn->query($sql);
+	$adminAccountInfo = $result->fetch_assoc();
+	echo '<script>console.log('.json_encode($adminAccountInfo).')</script>';
+?>
 	</head>
 
 <body style = 'background-color: white'>
@@ -83,7 +93,7 @@ ul {
 			echo"<div id = 'removeme' class='alert alert-dismissible alert-danger'>
 					<button type='button' class='close' data-dismiss='alert'>×</button>
 					<p style='text-align:center;'><i class = 'fa fa-warning'></i> ".$_SESSION['queryerror']."</p>
-					</div>";							
+					</div>";
 		}
 		if(!empty($_SESSION['uploadnotice'])){
 			if(strpos($_SESSION['uploadnotice'], 'rows successfully uploaded') !== false){
@@ -1318,8 +1328,6 @@ ul {
 
 	      <div class="modal-body">
 
-	     
-
 				<div class="form-group">
 
 					<div class="form-group">
@@ -1330,13 +1338,13 @@ ul {
 
 							<div  style = "display:inline-block;">
 
-								<input type="text" class = "form-control" id="interviewerFName" placeholder = "First Name"  style= "width:45%;display:inline-block; " >
+								<input type="text" class = "form-control" id="interviewerFName" placeholder = "First Name"  style= "width:45%;display:inline-block; " value="<?php echo $adminAccountInfo['firstname']?>">
 
-								<input type="text" class = "form-control" id="interviewerMName" placeholder = "Middle Name"  style= "width:45%; display:inline-block;margin-left:5%;" >
+								<input type="text" class = "form-control" id="interviewerMName" placeholder = "Middle Name"  style= "width:45%; display:inline-block;margin-left:5%;" value="<?php echo $adminAccountInfo['middlename']?>">
 
-								<input type="text" class = "form-control" id="interviewerLName" placeholder = "Last Name"  style= "width:45%;display:inline-block; " >
+								<input type="text" class = "form-control" id="interviewerLName" placeholder = "Last Name"  style= "width:45%;display:inline-block; " value="<?php echo $adminAccountInfo['lastname']?>">
 
-								<input type="text" class = "form-control" id="interviewerEmail" placeholder = "Email Address"   style= "width:45%;display:inline-block; margin-left:5%;" >
+								<input type="text" class = "form-control" id="interviewerEmail" placeholder = "Email Address"   style= "width:45%;display:inline-block; margin-left:5%;" value="<?php echo $adminAccountInfo['email']?>">
 
 							</div>
 

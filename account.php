@@ -73,17 +73,17 @@ unset($_SESSION['neco']);
 												<label class="col-md-2 control-label">First name</label>
 												<div class="col-md-1"></div>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="accountfname" disabled value>
+													<input type="text" class="form-control" id="accountFirstName" disabled value="<?php echo $row['firstname'] ?>">
 												</div>
 												<label class="col-md-2 control-label">Last name</label>
 												<div class="col-md-1"></div>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="accountlname" disabled value>
+													<input type="text" class="form-control" id="accountLastName" disabled value="<?php echo $row['lastname'] ?>">
 												</div>
 												<label class="col-md-2 control-label">Middle name</label>
 												<div class="col-md-1"></div>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="accountmname" disabled value>
+													<input type="text" class="form-control" id="accountMiddleName" disabled value="<?php echo $row['middlename'] ?>">
 												</div>
 											</div>
 
@@ -344,6 +344,7 @@ unset($_SESSION['neco']);
 					var newpassword = $("#newpassword").val();
 					var enewpassword = $("#newemailpassword").val();
 					var cenewpassword = $("#cnewemailpasswordx").val();
+
 					if (cnewpassword == newpassword) {
 						$("#passwordnotice2").text("");
 						if (cenewpassword == enewpassword) {
@@ -370,7 +371,33 @@ unset($_SESSION['neco']);
 						$("#epasswordnotice2").text("Passwords do not match!");
 						document.getElementById('submitbtn').disabled = true;
 					}
+				}
 
+				var currentFirstName = $('#accountFirstName').val();
+				var currentMiddleName = $('#accountMiddleName').val();
+				var currentLastName = $('#accountLastName').val();
+
+				$('#accountFirstName').keyup(function(){
+					console.log($(this).val());
+					validate3();
+				});
+				$('#accountMiddleName').keyup(function(){
+					console.log($(this).val());
+					validate3();
+				});
+				$('#accountLastName').keyup(function(){
+					console.log($(this).val());
+					validate3();
+				});
+
+				function validate3(){
+					if(currentFirstName != $('#accountFirstName').val() ||
+					currentMiddleName != $('#accountMiddleName').val() ||
+					currentLastName != $('#accountLastName').val()){
+						document.getElementById('submitbtn').disabled = false;
+					}else{
+						document.getElementById('submitbtn').disabled = true;
+					}
 				}
 
 				function enablefunction() {
@@ -384,9 +411,9 @@ unset($_SESSION['neco']);
 					document.getElementById('submitbtn').style.display = 'block';
 					document.getElementById('submitbtn').disabled = true;
 					document.getElementById("cnewemailpassword").style.display = "block";
-					document.getElementById("accountfname").disabled = false;
-					document.getElementById("accountlname").disabled = false;
-					document.getElementById("accountmname").disabled = false;
+					document.getElementById("accountFirstName").disabled = false;
+					document.getElementById("accountMiddleName").disabled = false;
+					document.getElementById("accountLastName").disabled = false;
 				}
 
 				function hideagain() {
@@ -399,9 +426,9 @@ unset($_SESSION['neco']);
 					document.getElementById("newemail").disabled = true;
 					document.getElementById("newemailpassword").disabled = true;
 					document.getElementById("changebtn").style.visibility = "visible";
-					document.getElementById("accountfname").disabled = true;
-					document.getElementById("accountlname").disabled = true;
-					document.getElementById("accountmname").disabled = true;
+					document.getElementById("accountFirstName").disabled = true;
+					document.getElementById("accountMiddleName").disabled = true;
+					document.getElementById("accountLastName").disabled = true;
 				}
 
 				function rollbackfunction() {
@@ -451,6 +478,10 @@ unset($_SESSION['neco']);
 					var newemail = document.getElementById('newemail').value;
 					var newemailpassword = document.getElementById('newemailpassword').value;
 
+					var newFirstName = $("#accountFirstName").val();
+					var newMiddleName = $("#accountMiddleName").val();
+					var newLastName = $("#accountLastName").val();
+
 					$.ajax({
 						url: "accountsetting.php",
 						type: "POST",
@@ -459,7 +490,10 @@ unset($_SESSION['neco']);
 							newusername: newusername,
 							newpassword: newpassword,
 							newemail: newemail,
-							newemailpassword: newemailpassword
+							newemailpassword: newemailpassword,
+							newFirstName: newFirstName,
+							newMiddleName: newMiddleName,
+							newLastName: newLastName
 						},
 						success: function (data) {
 							alert(data);
