@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // This class stores all the functions for CRUD (Create, Read, Update, Delete) operations of the database for the Quick Apply service of the HR Online System.
 class Operations
@@ -7,7 +7,7 @@ class Operations
 
 	// Call $con variable for connecting or manipulating the SQL Database
 	private $con;
-	
+
 	function __construct(){
 
 	// Constructor for connection
@@ -16,6 +16,8 @@ class Operations
 	$db = new DbConnect();
 
 	$this->con = $db->connect();
+
+
 
 	}
 
@@ -29,7 +31,7 @@ class Operations
 		}
 
 		// Else return all the positions from the database
-		$stmt = "SELECT id, position_name, status FROM tbl_position WHERE status = 1 ORDER BY position_name ASC";
+		$stmt = "SELECT * FROM tbl_position WHERE status = 1 ORDER BY position_name ASC";
 		$result = $this->con->query($stmt);
 		$temp = array();
 		if($result->num_rows>0){
@@ -38,7 +40,7 @@ class Operations
 			}
 		}
 
-		// header('Content-type: application/json');
+		header('Content-type: application/json');
 		return $temp;
 	}
 	// ###### READ #######
@@ -52,11 +54,11 @@ class Operations
 		$stmt->bind_param("ssssssssssssssssssss", $position ,$firstname, $lastname, $expected_salary, $mobile_number, $available_date, $school, $course, $finished_year, $recent_company, $recent_position, $date_started, $date_ended, $essay_answer, $shifting_schedule, $contractual, $holidays, $graduate_undergraduate, $bpo_experience, $related_experience_in_position);
 
 		if($stmt->execute()){
-			
+
 			// If the SQL ran without error
 			return 0;
 		}else{
-			
+
 			// If the SQL ran with error
 			return 1;
 		}

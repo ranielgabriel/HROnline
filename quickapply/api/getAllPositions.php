@@ -8,7 +8,6 @@ $response = array();
 // Create an empty variable
 $positionsToDisplay = "";
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	
 	// Check if the position variable for GET is set and not empty
