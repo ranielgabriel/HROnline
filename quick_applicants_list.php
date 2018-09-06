@@ -96,6 +96,10 @@ float: left;
                             <th>Graduate/Undergraduate</th>
                             <th>Course</th>
                             <th>Finished Year</th>
+							<th>Recent Company</th>
+							<th>Recent Position</th>
+							<th>BPO Experience</th>
+							<th>Related Experience in Position</th>
 						</tr>
 					</thead>
 					<?php  
@@ -105,16 +109,6 @@ float: left;
 						if ($result->num_rows > 0){
 							while($row = $result->fetch_assoc()) {
 					?>
-
-							<!-- <tr>
-								<td><?php echo $row['application_no']; ?></td>
-								<td><?php echo $row['last_name'].",".$row['first_name']." ".$row['extension_name']." ".$row['middle_name']; ?></td>
-                          		<td><?php echo $row['reference_code']; ?></td>
-                          		<td><?php echo $row['date_registered']; ?></td>
-                          		<td><?php if($row['status']=="1") { echo '<span style="font-weight:bold" class="text-success">Active</span>'; }   else if ($row['status'] == "2") { echo '<span style="font-weight:bold" class="text-warning">Suspend</span>'; } 
-                          else if ($row['status'] == "3") { echo '<span style="font-weight:bold" class="text-danger">Delete</span>'; } ?></td>
-
-							</tr> -->
                             <tr>
                                 <td>
                                     <?php echo $row['id'];?>
@@ -136,6 +130,18 @@ float: left;
                                 </td>
                                 <td>
                                     <?php echo $row['finished_year'];?>
+                                </td>
+                                <td>
+                                    <?php echo $row['recent_company'];?>
+                                </td>
+                                <td>
+                                    <?php echo $row['recent_position'];?>
+                                </td>
+                                <td>
+                                    <?php echo $row['bpo_experience'];?>
+                                </td>
+                                <td>
+                                    <?php echo $row['related_experience_in_position'];?>
                                 </td>
                             </tr>
 					 <?php
