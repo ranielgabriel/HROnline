@@ -1,8 +1,8 @@
 $('document').ready(function () {
     console.log("Document is ready.");
     var applicant;
-    
-    $('#myModal').modal();
+
+    $('#myModal').modal('show');
     // Call the function
     getAllPositions();
 
@@ -128,7 +128,7 @@ $('document').ready(function () {
             },
             dataType: 'json',
             success: function (msg) {
-                console.log(msg.message);
+                // console.log(msg.message);
                 $("#positionsContainer").append(msg["code"]);
 
             },

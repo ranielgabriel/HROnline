@@ -17,8 +17,6 @@ class Operations
 
 	$this->con = $db->connect();
 
-
-
 	}
 
 	// ###### READ #######
