@@ -5903,7 +5903,12 @@ body {
 .responsive {
   width: 500px;
   max-width: 100%;
-  height: auto; }
+  height: auto;
+  }
+
+.for-img {
+  padding-top: 20px;
+  margin-bottom: -20px; }
 
 .box {
   border: 1px solid #B2BABB;
@@ -6090,3 +6095,50 @@ input[type="number"]::-webkit-outer-spin-button {
   font-family: 'Roboto', sans-serif;
   margin-left: 355px;
   margin-bottom: 10px; }
+
+#Authorizationletter{
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+ font-weight: 700;
+ font-size: 29px;
+text-align: center;
+ padding-right: 5px;
+ padding-bottom: 1px;
+ display: block;
+ color: rgb(47, 84, 150);
+  }
+
+label {
+  font-family: 'Raleway', sans-serif;
+}
+
+.for-img{
+  padding-top: 20px;
+  margin-bottom:  -20px;
+}
+
+
+#letter {
+  display: block;
+  text-align:justify;
+  font-family: 'Raleway', sans-serif;
+  text-align: justify;
+}
+
+#IUnderstand {
+  display: block;
+  text-align: center;
+}
+
+#cancelBack {
+  display: block;
+  text-align: center;
+}
+
+#okay_button {
+  display: block;
+}
+
+#backRef {
+  display: block;
+}
