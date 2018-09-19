@@ -77,8 +77,48 @@
 		#ulSave div span {
 			float: left;
 		}
-	</style>
-	<?php  
+
+		.deleteButton
+		{
+			border: solid 1px #ABB2B9;
+			background-color: #f44336;
+			color: #F7F9F9;
+			padding-top:3px;
+			padding-bottom:5px;
+			padding-right: 20px;
+			padding-left: 20px;
+			text-transform: uppercase;
+			font-weight: bold;
+			text-align: center;
+  			transition: 0.3s;
+
+		}
+
+		.deleteButton:hover
+		{
+			text-decoration: none;
+			color: #f44336;
+			background-color: #F7F9F9;
+		}
+
+		.getCSV, .getExcel, .getCSV:hover, .getExcel:hover {
+			background-color: #208c82;
+			padding: 10px;
+			border-radius: .5rem;
+			text-decoration: none;
+			cursor: pointer;
+			color: #ffffff;
+			border: 1px solid #00887b;
+			box-shadow: 0 5px 10px 0 #808080;
+		}
+		.getCSV:active, .getExcel:active, .getCSV:visited, .getExcel:visited {
+			background-color: #196f67;
+			border: 1px solid #025850;
+			box-shadow: 0 5px 10px 0 #353535;
+		}
+
+			</style>
+	<?php
 		include('sidenavhtml.php');
 	?>
 
@@ -117,41 +157,42 @@
 								<th>Recent Position</th>
 								<th>BPO Experience</th>
 								<th>Related Experience in Position</th>
+								<th>Actions</th>
 							</tr>
 						</thead>
-						<?php  
-						include('connect.php');
-						$sql = "SELECT * FROM tbl_quick_applications ORDER BY id";
-						$result = $conn->query($sql);
-						if ($result->num_rows > 0){
-							while($row = $result->fetch_assoc()) {
-					?><tbody>
-						<tr>
-							<td><?php echo $row['id'];?></td>
-							<td><?php echo $row['position'];?></td>
-							<td><?php echo $row['lastname'] . ', ' . $row['firstname'] ;?></td>
-							<td><?php echo $row['mobile_number'];?></td>
-							<td><?php echo $row['graduate_undergraduate'];?></td>
-							<td><?php echo $row['course'];?></td>
-							<td><?php echo $row['finished_year'];?></td>
-							<td><?php echo $row['recent_company'];?></td>
-							<td><?php echo $row['recent_position'];?></td>
-							<td><?php echo $row['bpo_experience'];?></td>
-							<td><?php echo $row['related_experience_in_position'];?></td>
-						</tr>
-						<?php
-                            }
-                            }
-                            $conn->close();
-                            ?>
+						<tbody>
+							<?php
+							include('connect.php');
+							$sql = "SELECT * FROM tbl_quick_applications ORDER BY id";
+							$result = $conn->query($sql);
+							if ($result->num_rows > 0){
+								while($row = $result->fetch_assoc()) {?>
+								<tr>
+									<td><?php echo $row['id'];?></td>
+									<td><?php echo $row['position'];?></td>
+									<td><?php echo $row['lastname'] . ', ' . $row['firstname'] ;?></td>
+									<td><?php echo $row['mobile_number'];?></td>
+									<td><?php echo $row['graduate_undergraduate'];?></td>
+									<td><?php echo $row['course'];?></td>
+									<td><?php echo $row['finished_year'];?></td>
+									<td><?php echo $row['recent_company'];?></td>
+									<td><?php echo $row['recent_position'];?></td>
+									<td><?php echo $row['bpo_experience'];?></td>
+									<td><?php echo $row['related_experience_in_position'];?></td>
+									<td><?php echo '<a class="deleteButton" onclick="deleteQuickApplicant(' . $row['id'] . ')">Delete</a>'; ?></td>
+								</tr>
+							<?php
+								}
+									}
+								$conn->close();?>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 		<div style="position:fixed;bottom:25px;right:25px">
-			<a class="getCSV">Save as CSV</a>
-			<!-- <a class="getExcel" onclick="window.open('data:application/vnd.ms-excel,' + document.getElementById('myTable').outerHTML.replace(/ /g, '%20'));">Save as Excel</a> -->
+			<a class="getCSV" id="getCSV">Save as CSV</a>
+			<a class="getExcel" onclick="window.open('data:application/vnd.ms-excel,' + document.getElementById('myTable').outerHTML.replace(/ /g, '%20'));">Save as Excel</a>
 		</div>
 	</div>
 
@@ -185,7 +226,42 @@
 	</script>
 	<script type="text/javascript" src="js/csv.js"></script>
 	<script type="text/javascript">
-		$('.getCSV').click( function() { 
+
+		// For deleting the quick applicant
+		$(document).ready(function(){
+
+			console.log('Page is ready.');
+		});
+		function deleteQuickApplicant(id){
+				$.ajax({
+
+					// URL of the PHP file
+					url: "quickapply/api/deleteQuickApplicant.php",
+
+					// Request method
+					type: "POST",
+
+					// Parameters / Data to be passed
+					data: {
+						id: id
+					},
+
+					// Data type
+					dataType: 'json',
+
+					// If the URL is  successfully loaded.
+					success: function (msg) {
+						alert(msg.message);
+						location.reload();
+					},
+					error: function (msg) {
+						console.log(msg.responseText);
+					}
+				});
+			}
+	</script>
+	<script type="text/javascript">
+		$('.getCSV').click( function() {
 			exportTableToCSV.apply(this, [$('#myTable'), 'quickApplyApplicants.csv']);
 		});
 	</script>
@@ -206,6 +282,7 @@
 		  		unset($_SESSION['queryerror']); ?>
 		}, 5000);
 	</script>
+
 </body>
 
 </html>

@@ -63,5 +63,25 @@ class Operations
 	}
 	// ###### CREATE #######
 
+	// ###### DELETE #######
+	// This function will delete a quick apply applicant in the database
+	function deleteQuickApplicant($id){
+
+		$stmt = $this->con->prepare("DELETE FROM tbl_quick_applications WHERE id = ?");
+
+		$stmt->bind_param("i", $id);
+
+		if($stmt->execute()){
+
+			// If the SQL ran without error
+			return 0;
+		}else{
+
+			// If the SQL ran with error
+			return 1;
+		}
+	}
+	// ###### DELETE #######
+
 // END OF CLASS //
 }
