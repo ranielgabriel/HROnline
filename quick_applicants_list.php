@@ -101,6 +101,28 @@
 			background-color: #F7F9F9;
 		}
 
+		.noButton
+		{
+			border: solid 1px #ABB2B9;
+			background-color: #2ECC71;
+			color: #F7F9F9;
+			padding-top:3px;
+			padding-bottom:5px;
+			padding-right: 20px;
+			padding-left: 20px;
+			text-transform: uppercase;
+			font-weight: bold;
+			text-align: center;
+  			transition: 0.3s;
+
+		}
+
+		.noButton:hover
+		{
+			text-decoration: none;
+			color: #2ECC71;
+			background-color: #F7F9F9;
+		}
 		.getCSV, .getExcel, .getCSV:hover, .getExcel:hover {
 			background-color: #208c82;
 			padding: 10px;
@@ -179,7 +201,7 @@
 									<td><?php echo $row['recent_position'];?></td>
 									<td><?php echo $row['bpo_experience'];?></td>
 									<td><?php echo $row['related_experience_in_position'];?></td>
-									<td><?php echo '<a class="deleteButton" onclick="deleteQuickApplicant(' . $row['id'] . ')">Delete</a>'; ?></td>
+									<td><?php echo '<a class="btn btn-danger btn-sm confirmDeleteModalClass" data-toggle="modal" data-target="#confirmModal"  data-quick-apply-id="' . $row['id'] . '" data-quick-apply-position="' . $row['position'] . '" data-quick-apply-name="' . $row['lastname'] . ', ' . $row['firstname'] . '" data-quick-apply-mobile_number="' . $row['mobile_number'] . '" data-quick-apply-graduate_undergraduate="' . $row['graduate_undergraduate'] . '" data-quick-apply-course="' . $row['course'] . '" data-quick-apply-finished_year="' . $row['finished_year'] . '" data-quick-apply-recent_company="' . $row['recent_company'] . '" data-quick-apply-recent_position="' . $row['recent_position'] . '" data-quick-apply-bpo_experience="' . $row['bpo_experience'] . '" data-quick-apply-related_experience_in_position="' . $row['related_experience_in_position'] . '" ><span class="fa fa-trash"></span></a>'; ?></td>
 								</tr>
 							<?php
 								}
@@ -193,6 +215,72 @@
 		<div style="position:fixed;bottom:25px;right:25px">
 			<a class="getCSV" id="getCSV">Save as CSV</a>
 			<a class="getExcel" onclick="window.open('data:application/vnd.ms-excel,' + document.getElementById('myTable').outerHTML.replace(/ /g, '%20'));">Save as Excel</a>
+		</div>
+	</div>
+
+	<!-- The Modal -->
+	<div class="modal" id="confirmModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">DELETE QUICK APPLY APPLICANT</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+
+					<table class="table table-border table-condensed table-striped">
+						<thead>
+							<tr colspan="2"><h6 class="text-center">Are you sure you want to delete this applicant from the list?</h6></tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>ID: </td><td id="quick-apply-id"></td>
+						</tr>
+						<tr>
+							<td>Position Applying: </td><td id="quick-apply-position"></td>
+						</tr>
+						<tr>
+							<td>Name: </td><td id="quick-apply-name"></td>
+						</tr>
+						<tr>
+							<td>Mobile Number: </td><td id="quick-apply-mobile_number"></td>
+						</tr>
+						<tr>
+							<td>Graduate/Undergraduate: </td><td id="quick-apply-graduate_undergraduate"></td>
+						</tr>
+						<tr>
+							<td>Course: </td><td id="quick-apply-course"></td>
+						</tr>
+						<tr>
+							<td>Finished Year: </td><td id="quick-apply-finished_year"></td>
+						</tr>
+						<tr>
+							<td>Recent Company: </td><td id="quick-apply-recent_company"></td>
+						</tr>
+						<tr>
+							<td>Recent Position: </td><td id="quick-apply-recent_position"></td>
+						</tr>
+						<tr>
+							<td>BPO Experience: </td><td id="quick-apply-bpo_experience"></td>
+						</tr>
+						<tr>
+							<td>Related Experience in Position: </td><td id="quick-apply-related_experience_in_position"> </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="noButton" data-dismiss="modal">No</button>
+					<button type="button" class="deleteButton confirmDeleteButton" data-dismiss="modal">Yes</button>
+				</div>
+
+			</div>
 		</div>
 	</div>
 
@@ -229,8 +317,26 @@
 
 		// For deleting the quick applicant
 		$(document).ready(function(){
-
 			console.log('Page is ready.');
+
+			$('.confirmDeleteModalClass').click(function(){
+				$('#quick-apply-id').html($(this).data('quick-apply-id'));
+				$('#quick-apply-position').html($(this).data('quick-apply-position'));
+				$('#quick-apply-name').html($(this).data('quick-apply-name'));
+				$('#quick-apply-mobile_number').html($(this).data('quick-apply-mobile_number'));
+				$('#quick-apply-graduate_undergraduate').html($(this).data('quick-apply-graduate_undergraduate'));
+				$('#quick-apply-course').html($(this).data('quick-apply-course'));
+				$('#quick-apply-finished_year').html($(this).data('quick-apply-finished_year'));
+				$('#quick-apply-recent_company').html($(this).data('quick-apply-recent_company'));
+				$('#quick-apply-recent_position').html($(this).data('quick-apply-recent_position'));
+				$('#quick-apply-bpo_experience').html($(this).data('quick-apply-bpo_experience'));
+				$('#quick-apply-related_experience_in_position').html($(this).data('quick-apply-related_experience_in_position'));
+			});
+
+			$('.confirmDeleteButton').click(function(){
+				deleteQuickApplicant($('#quick-apply-id').html());
+			})
+
 		});
 		function deleteQuickApplicant(id){
 				$.ajax({

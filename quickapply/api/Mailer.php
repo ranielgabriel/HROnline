@@ -24,14 +24,14 @@
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
 
-    // Username and Password andersonhronline@gmaail.com
+    // Username and Password andersonhronline@gmail.com
     $mail->Username = 'phrecruitment@andersongroup.ph.com';
     $mail->Password = 'Password123';
 
     $mail->SetFrom('phrecruitment@andersongroup.ph.com','Anderson Group PH');
     $mail->AddReplyTo('no-reply@example.com');
     // $mail->AddAddress('andersonhronline@gmail.com');
-    //$mail->addAddress('phrecruitment@andersonbpoinc.com');
+    // $mail->addAddress('phrecruitment@andersonbpoinc.com');
     $mail->isHTML(true);
     $mail->AddEmbeddedImage('../../aga.png', 'logo', '../../aga.png');
 

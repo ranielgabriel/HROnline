@@ -1,7 +1,7 @@
 $('document').ready(function () {
     console.log("Document is ready.");
     var applicant;
-
+    
     $('#myModal').modal('show');
     // Call the function
     getAllPositions();
@@ -118,7 +118,7 @@ $('document').ready(function () {
                 console.log(msg.responseText);
             }
         });
-        console.log(applicant);
+        // console.log(applicant);
     }
 
 
