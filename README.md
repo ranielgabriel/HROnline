@@ -17,7 +17,7 @@ You need XAMPP, FileZilla, Visual Studio Code (or any text editor but use VSC if
 2. You will also be needing to install XAMPP for Apache, PHP and FileZilla.
 3. Clone and download this repository. Copy and paste it to your web server or if you are using XAMPP, it's in the /htdocs directory of wherever you installed XAMPP.
 4. Get the database from your PM or the supervisor handling the HR Online Recruits.
-5. Download and import the SQL file to the /phpmyadmin.
+5. Download and import the SQL file to the /phpmyadmin and configure the connection string of your codes to match the authentication of your MySQL database.
 6. Test and run the website.
 ```
 
@@ -38,7 +38,7 @@ In adding features or when working something in the system, you must use branchi
 *The release branch is the branch for development, this should be the copy of every developer and this is the branch that you must work on first before pushing and merging into the main branch.
 *The feature branch holds all the small features the system has. If you are working on adding a new feature in the system, you should create and check out a branch with 'feature/nameOfNewFeature' so everyone can work on the feature without worrying about the release or current working system.
 
-### Importan Reminders
+### Important Reminders
 ```
 * ALWAYS test everything in the development stage before uploading changes into the live server. 
 * In development stage, if you are testing or working in submission of application forms, put in mind that it will notify and submit an email on the email address of the HR, so remove the mailer function first or if you are working on the mailer, use data that will distinguish that it is for debugging/development purposes only (eg. firstname->'Test').
