@@ -57,31 +57,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$mail = new PHPMailer;
 
 		    // PHPMailer Settings
-			// Live
-			$mail->Host = 'relay-hosting.secureserver.net';
+			$mail->Host = 'relay-hosting.secureserver.net'; // if owa
+			// $mail->Host = "smtp.gmail.com"; // if gmail
 			$mail->Port = 587;
 			$mail->SMTPSecure = 'tls';
 			$mail->SMTPAuth = true;
 			// Live
-			// Username and Password
 			$mail->Username = 'phrecruitment@andersonbpoinc.com';
 			$mail->Password = 'Password123';
 
 			// andersongroupintern@gmail.com forwards the email to phrecruitment@andersonbpoinc.com 
-			$mail->AddAddress('andersongroupintern@gmail.com');
 			$mail->AddAddress('phrecruitment@andersonbpoinc.com');
+			// $mail->AddAddress('andersongroupintern@gmail.com');
+			$mail->AddAddress('andersonhronline@gmail.com');
 
 		    // Local Testing
 		    // $mail->isSMTP();
 		    // $mail->SMTPDebug = 0; // 1 message: client, 2 message: client and Server, 0 pag wala okay?
-		    // $mail->Host = "smtp.gmail.com";
-		    // $mail->Port = 587;
-		    // $mail->SMTPSecure = 'tls';
-		    // $mail->SMTPAuth = true;
-		    // Account
-		    // $mail->Username = 'andersongroupintern@gmail.com';
-		    // $mail->Password = 'Andersongroupinternsecret';
-		    // $mail->AddAddress('andersongroupintern@gmail.com');
+		    // $mail->Username = 'andersonhronline@gmail.com';
+		    // $mail->Password = 'Password321';
 
 		    $mail->SetFrom('phrecruitment@andersonbpoinc.com','Anderson Group PH');
 		    $mail->AddReplyTo('no-reply@example.com');
