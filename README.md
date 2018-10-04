@@ -38,7 +38,7 @@ In adding features or when working something in the system, you must use branchi
 *The release branch is the branch for development, this should be the copy of every developer and this is the branch that you must work on first before pushing and merging into the main branch.
 *The feature branch holds all the small features the system has. If you are working on adding a new feature in the system, you should create and check out a branch with 'feature/nameOfNewFeature' so everyone can work on the feature without worrying about the release or current working system.
 
-###IMPORTANT REMINDERS
+### Importan Reminders
 ```
 * ALWAYS test everything in the development stage before uploading changes into the live server. 
 * In development stage, if you are testing or working in submission of application forms, put in mind that it will notify and submit an email on the email address of the HR, so remove the mailer function first or if you are working on the mailer, use data that will distinguish that it is for debugging/development purposes only (eg. firstname->'Test').
@@ -46,7 +46,7 @@ In adding features or when working something in the system, you must use branchi
 * When writing codes, ALWAYS write comments. It will not just help you when going back or debugging the system when a bug occurs but also help the future developers who will take over the system.
 ```
 
-###IMPORTANT FILES IN THE FILE TREE
+### Important Files From the File Tree
 ```
 /HROnline
 |-config - This folder contains some of the PHP files for queries in the HR Online Recruits.
