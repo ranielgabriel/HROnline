@@ -31,16 +31,23 @@ This system was written, developed and created by many different software develo
 
 If you are reading this, your best approach in taking over this system is trial and error by using the console of the browser in debugging.
 
+### Branching
+In adding features or when working something in the system, you must use branching to avoid unwanted errors and for everyone to have the same working version of the system. Therefore, we must follow a branching structure for the system.
+
+*The master branch is the main branch that is working and in the production stage.
+*The release branch is the branch for development, this should be the copy of every developer and this is the branch that you must work on first before pushing and merging into the main branch.
+*The feature branch holds all the small features the system has. If you are working on adding a new feature in the system, you should create and check out a branch with 'feature/nameOfNewFeature' so everyone can work on the feature without worrying about the release or current working system.
+
+###IMPORTANT REMINDERS
 ```
-#IMPORTANT REMINDERS
 * ALWAYS test everything in the development stage before uploading changes into the live server. 
 * In development stage, if you are testing or working in submission of application forms, put in mind that it will notify and submit an email on the email address of the HR, so remove the mailer function first or if you are working on the mailer, use data that will distinguish that it is for debugging/development purposes only (eg. firstname->'Test').
 * ALWAYS check if there is anyone who is currently using the system before uploading changes in the system. 
 * When writing codes, ALWAYS write comments. It will not just help you when going back or debugging the system when a bug occurs but also help the future developers who will take over the system.
 ```
 
+###IMPORTANT FILES IN THE FILE TREE
 ```
-#IMPORTANT FILES IN THE FILE TREE
 /HROnline
 |-config - This folder contains some of the PHP files for queries in the HR Online Recruits.
 |-css - This folder contains the CSS files of the HR Online Recruits.
@@ -82,6 +89,7 @@ If you are reading this, your best approach in taking over this system is trial 
 |-view_authorization_list.php - This file is for General List.
 |-policy_viewer.php - This file is for the Privacy Policy List.
 ```
-Note: Many files were not written and included in the "Important Files" section because during working or up to this date upon writing this README, I did not encounter changing or working any codes in the other files. Only the files in the "Important Files" section are the files that I had a chance to worked on.
+
+PS: Many files were not written and included in the "Important Files" section because during working or up to this date upon writing this README, I did not encounter changing or working any codes in the other files. Only the files in the "Important Files" section are the files that I had a chance to worked on.
 
 Update this README if you want to add any other essential changes or notes.
