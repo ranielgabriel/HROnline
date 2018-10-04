@@ -57,30 +57,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$mail = new PHPMailer;
 
 		    // PHPMailer Settings
-		 //    // Live
-		 //    $mail->Host = 'relay-hosting.secureserver.net';
-		 //    $mail->Port = 587;
-		 //    $mail->SMTPSecure = 'tls';
-		 //    $mail->SMTPAuth = true;
-			// // Live
-		 //    // Username and Password andersonhronline@gmaail.com
-		 //    $mail->Username = 'phrecruitment@andersongroup.ph.com';
-		 //    $mail->Password = 'Password123';
-		 //    $mail->AddAddress('andersonhronline@gmail.com');
+			// Live
+			$mail->Host = 'relay-hosting.secureserver.net';
+			$mail->Port = 587;
+			$mail->SMTPSecure = 'tls';
+			$mail->SMTPAuth = true;
+			// Live
+			// Username and Password
+			$mail->Username = 'phrecruitment@andersonbpoinc.com';
+			$mail->Password = 'Password123';
 
-		    //Local
-		    $mail->isSMTP();
-		    $mail->SMTPDebug = 0; // 1 message: client, 2 message: client and Server, 0 pag wala okay?
-		    $mail->Host = "smtp.gmail.com";
-		    $mail->Port = 587;
-		    $mail->SMTPSecure = 'tls';
-		    $mail->SMTPAuth = true;
-		    // Local
-		    $mail->Username = 'titiwshopping@gmail.com';
-		    $mail->Password = 'codesociety1';
-		    $mail->AddAddress('ranielramosgabriel@gmail.com');
+			// andersongroupintern@gmail.com forwards the email to phrecruitment@andersonbpoinc.com 
+			$mail->AddAddress('andersongroupintern@gmail.com');
+			$mail->AddAddress('phrecruitment@andersonbpoinc.com');
 
-		    $mail->SetFrom('phrecruitment@andersongroup.ph.com','Anderson Group PH');
+		    // Local Testing
+		    // $mail->isSMTP();
+		    // $mail->SMTPDebug = 0; // 1 message: client, 2 message: client and Server, 0 pag wala okay?
+		    // $mail->Host = "smtp.gmail.com";
+		    // $mail->Port = 587;
+		    // $mail->SMTPSecure = 'tls';
+		    // $mail->SMTPAuth = true;
+		    // Account
+		    // $mail->Username = 'andersongroupintern@gmail.com';
+		    // $mail->Password = 'Andersongroupinternsecret';
+		    // $mail->AddAddress('andersongroupintern@gmail.com');
+
+		    $mail->SetFrom('phrecruitment@andersonbpoinc.com','Anderson Group PH');
 		    $mail->AddReplyTo('no-reply@example.com');
 		    $mail->isHTML(true);
 		    $mail->AddEmbeddedImage('../../aga.png', 'logo', '../../aga.png');
@@ -121,11 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		    $bodyContent .=            "<tr><td><b>Date Ended:</b></td><td>" . $applicant->dateEnded . "</td></tr>";
 		    $bodyContent .=            "<tr><td><b>Position:</b></td><td>" . $applicant->recentPosition . "</td></tr>";
 		    $bodyContent .=            "<tr><td></td><td></td></tr>";
-		    $bodyContent .=            "<tr colspan='2'><td><label><b>Essay:</b></label></td></tr>";
-		    $bodyContent .=            "<tr colspan='2'><td>" . $applicant->essayAnswer . "</td></tr>";
+		    $bodyContent .=            "<tr><td colspan='2'><label><b>Essay:</b></label></td></tr>";
+		    $bodyContent .=            "<tr><td colspan='2'>" . $applicant->essayAnswer . "</td></tr>";
 		    $bodyContent .=        "</table>";
 		    $bodyContent .="</div>";
-
 
 		    // Email Content Extra
 		    $mail->Subject = 'Anderson Group Philippines | Anderson.Recruits';

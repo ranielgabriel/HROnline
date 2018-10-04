@@ -15,7 +15,7 @@
     // Local Testing ####
     $mail->SMTPDebug = 0;
     $mail->isSMTP();
-    $mail->AddAddress('ranielramosgabriel@gmail.com');
+    $mail->AddAddress('andersongroupintern@gmail.com');
     // Local Testing ####
 
     // Live ###
@@ -24,14 +24,16 @@
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
 
-    // Username and Password andersonhronline@gmail.com
-    $mail->Username = 'phrecruitment@andersongroup.ph.com';
-    $mail->Password = 'Password123';
+    // Username and Password
+    // $mail->Username = 'phrecruitment@andersongroup.uk.com';
+    // $mail->Password = 'Password123';
+    $mail->Username = 'andersongroupintern@gmail.com';
+    $mail->Password = 'Andersongroupinternsecret';
 
-    $mail->SetFrom('phrecruitment@andersongroup.ph.com','Anderson Group PH');
+    $mail->SetFrom('andersongroupintern@gmail.com','Anderson Group PH');
     $mail->AddReplyTo('no-reply@example.com');
     // $mail->AddAddress('andersonhronline@gmail.com');
-    // $mail->addAddress('phrecruitment@andersonbpoinc.com');
+    // $mail->AddAddress('phrecruitment@andersonbpoinc.com');
     $mail->isHTML(true);
     $mail->AddEmbeddedImage('../../aga.png', 'logo', '../../aga.png');
 
