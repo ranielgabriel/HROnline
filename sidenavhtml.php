@@ -24,15 +24,20 @@
 	
 	echo' 
 	<center>
-	<a class="navi" style="text-align: left;border-bottom: 2px solid;border-top: 2px solid" href="google.php?id='.$id.'"><h5>Application List</h5></a>
-	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="applicants.php?id='.$id.'"><h5>Applicant List</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="#sideNavCollapse" data-toggle="collapse"><h5>Lists</h5></a>
+	<div id="sideNavCollapse" class="collapse">
+	<a class="navi" style="text-align: left;border-bottom: 2px solid;border-top: 2px solid" href="google.php?id='.$id.'"><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Application List</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="applicants.php?id='.$id.'"><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Applicant List</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="quick_applicants_list.php?id='.$id.'"><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quick Apply Applicants</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href=" view_authorization_list.php?id='.$id.'"><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General List</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href=" policy_viewer.php?id='.$id.'"><h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Privacy Policy List</h5></a>
+	</div> 
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="reports.php?id='.$id.'"><h5>Reports</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="createAccount.php?id='.$id.'"><h5>Create User Accounts</h5></a>
-	<a class="navi" style="text-align: left;border-bottom: 2px solid" href=" view_authorization_list.php?id='.$id.'"><h5>General List</h5></a>
-	<a class="navi" style="text-align: left;border-bottom: 2px solid" href=" policy_viewer.php?id='.$id.'"><h5>Privacy Policy List</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="user_logs.php?id='.$id.'"><h5>User History Logs</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="cms.php?id='.$id.'"><h5>Content Management System</h5></a>
-	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="about.php?id='.$id.'"><h5>About Us</h5></a> ';
+	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="about.php?id='.$id.'"><h5>About Us</h5></a>
+	' ;
    if($_SESSION['id'] == 1){
 	  echo '
 	 

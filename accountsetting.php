@@ -20,7 +20,12 @@
 	  $newpassword =  md5($_POST['newpassword']);
 	  $newemail = mysqli_real_escape_string($conn, $_POST['newemail']);
 	  $newemailpassword = md5($_POST['newemailpassword']);
-	  $sql = "UPDATE tbl_admin SET username = '$newusername', password = '$newpassword', email = '$newemail', email_password = '$newemailpassword' WHERE id = '$id'";
+
+	  $newFirstName = mysqli_real_escape_string($conn, $_POST['newFirstName']);
+	  $newMiddleName = mysqli_real_escape_string($conn, $_POST['newMiddleName']);
+	  $newLastName = mysqli_real_escape_string($conn, $_POST['newLastName']);
+
+	  $sql = "UPDATE tbl_admin SET username = '$newusername', password = '$newpassword', email = '$newemail', email_password = '$newemailpassword' , firstname = '$newFirstName', middlename = '$newMiddleName', lastname = '$newLastName' WHERE id = '$id'";
 		if($conn->query($sql) === TRUE){
 			echo "Account updated successfully!";
 		}
