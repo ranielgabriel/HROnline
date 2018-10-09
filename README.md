@@ -34,9 +34,9 @@ If you are reading this, your best approach in taking over this system is trial 
 ### Branching
 In adding features or when working something in the system, you must use branching to avoid unwanted errors and for everyone to have the same working version of the system. Therefore, we must follow a branching structure for the system.
 
-*The master branch is the main branch that is working and in the production stage.
-*The release branch is the branch for development, this should be the copy of every developer and this is the branch that you must work on first before pushing and merging into the main branch.
-*The feature branch holds all the small features the system has. If you are working on adding a new feature in the system, you should create and check out a branch with 'feature/nameOfNewFeature' so everyone can work on the feature without worrying about the release or current working system.
+* The master branch is the main branch that is working and in the production stage.
+* The release branch is the branch for development, this should be the copy of every developer and this is the branch that you must work on first before pushing and merging into the main branch.
+* The feature branch holds all the small features the system has. If you are working on adding a new feature in the system, you should create and check out a branch with 'feature/nameOfNewFeature' so everyone can work on the feature without worrying about the release or current working system.
 
 ### Important Reminders
 ```
