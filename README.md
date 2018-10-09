@@ -40,10 +40,10 @@ In adding features or when working something in the system, you must use branchi
 
 ### Important Reminders
 ```
-* ALWAYS test everything in the development stage before uploading changes into the live server. 
-* In development stage, if you are testing or working in submission of application forms, put in mind that it will notify and submit an email on the email address of the HR, so remove the mailer function first or if you are working on the mailer, use data that will distinguish that it is for debugging/development purposes only (eg. firstname->'Test').
-* ALWAYS check if there is anyone who is currently using the system before uploading changes in the system. 
-* When writing codes, ALWAYS write comments. It will not just help you when going back or debugging the system when a bug occurs but also help the future developers who will take over the system.
+1. ALWAYS test everything in the development stage before uploading changes into the live server. 
+2. In development stage, if you are testing or working in submission of application forms, put in mind that it will notify and submit an email on the email address of the HR, so remove the mailer function first or if you are working on the mailer, use data that will distinguish that it is for debugging/development purposes only (eg. firstname->'Test').
+3. ALWAYS check if there is anyone who is currently using the system before uploading changes in the system. 
+4. When writing codes, ALWAYS write comments. It will not just help you when going back or debugging the system when a bug occurs but also help the future developers who will take over the system.
 ```
 
 ### Important Files From the File Tree
