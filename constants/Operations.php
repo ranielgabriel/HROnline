@@ -42,5 +42,25 @@ class Operations
 		return mysqli_fetch_assoc($result);
 	}
 
+	function getAllApplicantStatus(){
+		$stmt = "SELECT 
+		SUM(CASE WHEN tbl_application.status ='Pending' THEN 1 ELSE 0 END) AS 'Pending',
+		SUM(CASE WHEN tbl_application.status ='No Show' THEN 1 ELSE 0 END) AS 'No Show',
+		SUM(CASE WHEN tbl_application.status LIKE '%Interview%' THEN 1 ELSE 0 END) AS 'Interview',
+		SUM(CASE WHEN tbl_application.status ='Rejected' THEN 1 ELSE 0 END) AS 'Fail/Reject'
+		FROM tbl_application";
+		
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
 // END OF CLASS //
 }

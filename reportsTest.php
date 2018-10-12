@@ -442,7 +442,7 @@
     </script> -->
 
     <!-- Applicant Status Function -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {
             'packages': ['corechart']
@@ -482,7 +482,7 @@
             var chart = new google.visualization.PieChart(document.getElementById('applicantStatusChart'));
             chart.draw(data, options);
         }
-    </script>
+    </script> -->
 
     <!-- Applicant Source Function Function -->
     <!-- <script type="text/javascript">

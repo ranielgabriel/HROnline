@@ -8,11 +8,11 @@ $response = array();
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	$db = new Operations();
-	$result = $db->getAllApplicantSource();
+	$result = $db->getAllApplicantStatus();
 
 	$response['error'] = false;
-	$response['source'] = $result;
-	$response['message'] = 'These are all the applicant source.';
+	$response['status'] = $result;
+	$response['message'] = 'These are all the applicant status.';
 
 }else{
 
