@@ -158,7 +158,7 @@
     </script>
 
     <!-- Monthly Applicants Function -->
-    <script>
+    <!-- <script>
         google.charts.load('current', {
             packages: ['corechart', 'bar']
         });
@@ -216,7 +216,7 @@
             var chart = new google.visualization.ColumnChart(document.getElementById('monthlyApplicantsChart'));
             chart.draw(data, options);
         }
-    </script>
+    </script> -->
 
     <!-- <script type="text/javascript">
         // Monthly Applicants Chart

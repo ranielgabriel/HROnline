@@ -105,5 +105,63 @@ class Operations
 		return $temp;
 	}
 
+	function getAllMonthlyApplicant(){
+		$currentYear = date('Y');
+		$stmt = "SELECT 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-01-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') < '".$currentYear."-02-01' THEN 1 ELSE 0 END) as 'January', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-02-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') < '".$currentYear."-03-01' THEN 1 ELSE 0 END) as 'February', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-03-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-03-31' THEN 1 ELSE 0 END) as 'March',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-04-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-04-30' THEN 1 ELSE 0 END) as 'April', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-05-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-05-31' THEN 1 ELSE 0 END) as 'May',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-06-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-06-30' THEN 1 ELSE 0 END) as 'June',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-07-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-07-31' THEN 1 ELSE 0 END) as 'July',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-08-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-08-31' THEN 1 ELSE 0 END) as 'August', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-09-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-09-30' THEN 1 ELSE 0 END) as 'September',  
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-10-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-10-31' THEN 1 ELSE 0 END) as 'October',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-11-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-11-30' THEN 1 ELSE 0 END) as 'November', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-12-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-12-31' THEN 1 ELSE 0 END) as 'December'  
+		FROM tbl_application";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
+	function getAllMonthlyQuickApplyApplicant(){
+		$currentYear = date('Y');
+		$stmt = "SELECT 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-01-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') < '".$currentYear."-02-01' THEN 1 ELSE 0 END) as 'January', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-02-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') < '".$currentYear."-03-01' THEN 1 ELSE 0 END) as 'February', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-03-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-03-31' THEN 1 ELSE 0 END) as 'March',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-04-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-04-30' THEN 1 ELSE 0 END) as 'April', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-05-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-05-31' THEN 1 ELSE 0 END) as 'May',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-06-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-06-30' THEN 1 ELSE 0 END) as 'June',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-07-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-07-31' THEN 1 ELSE 0 END) as 'July',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-08-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-08-31' THEN 1 ELSE 0 END) as 'August', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-09-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-09-30' THEN 1 ELSE 0 END) as 'September',  
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-10-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-10-31' THEN 1 ELSE 0 END) as 'October',
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-11-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-11-30' THEN 1 ELSE 0 END) as 'November', 
+		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-12-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-12-31' THEN 1 ELSE 0 END) as 'December'  
+		FROM tbl_quick_applications";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
 // END OF CLASS //
 }

@@ -1,18 +1,110 @@
 $(document).ready(function () {
 
     console.log('Page is ready.');
+    
+    getAllMonthlyApplicant();
     getAllApplicantSource();
     getAllApplicantStatus();
     getAllApplicantLocation();
-    
+
 });
+
+function getAllMonthlyApplicant(){
+    $.ajax({
+        url: 'api/reports/getAllMonthlyApplicant.php',
+        type: 'GET',
+        success: function (msg) {
+            google.charts.load('current', {
+                packages: ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(drawAnnotations);
+
+            function drawAnnotations() {
+                var arrayMonthlyApplicantsToShow = [];
+
+                // for (var i = 0; msg['applicants'].length; i++){
+
+                $.each(msg['applicants'], function (index, value) {
+                    $.each(msg['applicants'][index], function (index, value) {
+                        // console.log(index + ": " + value);
+                        // console.log(msg['quickApplyApplicants'][0][index]);
+                        arrayMonthlyApplicantsToShow.push([index, parseInt(value), value, parseInt(msg['quickApplyApplicants'][0][index]), msg['quickApplyApplicants'][0][index]]);
+                    });
+                });
+                console.log(arrayMonthlyApplicantsToShow);
+                
+                var dataMonthlyApplicants = new google.visualization.DataTable();
+                dataMonthlyApplicants.addColumn('string', 'Month');
+                dataMonthlyApplicants.addColumn('number', 'Applicants');
+                dataMonthlyApplicants.addColumn({
+                    type: 'string',
+                    role: 'annotation'
+                });
+
+                dataMonthlyApplicants.addColumn('number', 'Quick Apply Applicants');
+                dataMonthlyApplicants.addColumn({
+                    type: 'string',
+                    role: 'annotation'
+                });
+                
+
+                // dataMonthlyApplicants.addRows([
+                //     ['January', 100, '100', 25, '25'],
+                //     ['February', 1170, '1170', 460, '460'],
+                //     ['March', 11700, '11700', 460, '460'],
+                //     ['April', 11220, '11220', 460, '460'],
+                //     ['May', 10470, '10470', 460, '460'],
+                //     ['June', 2050, '2050', 460, '460'],
+                //     ['July', 8170, '8170', 460, '460'],
+                //     ['August', 7170, '7170', 460, '460'],
+                //     ['September', 6170, '6170', 460, '460'],
+                //     ['October', 4170, '4170', 460, '460'],
+                //     ['November', 660, '660', 1120, '1120'],
+                //     ['December', 9030, '9030', 54, '54']
+                // ]);
+                dataMonthlyApplicants.addRows(arrayMonthlyApplicantsToShow);
+
+                var options = {
+                    animation: {
+                        startup: true,
+                        duration: 10
+                    },
+                    annotations: {
+                        alwaysOutside: true,
+                        textStyle: {
+                            fontSize: 14,
+                            color: '#000',
+                            auraColor: 'none'
+                        },
+                        stem: {
+                            color: 'black',
+                            length: 5
+                        },
+                        style: 'point'
+                    },
+                    legend: {
+                        position: 'top',
+                        alignment: 'center'
+                    },
+                    bar: {
+                        groupWidth: '70%'
+                    },
+                    backgroundColor: 'transparent',
+                    dataOpacity: .8
+                };
+                var chart = new google.visualization.ColumnChart(document.getElementById('monthlyApplicantsChart'));
+                chart.draw(dataMonthlyApplicants, options);
+            }
+        }
+    });
+}
 
 function getAllApplicantSource() {
     $.ajax({
         url: 'api/reports/getAllApplicantSource.php',
         type: 'GET',
         success: function (msg) {
-            console.log(msg);
+
             // Load the Visualization API and the corechart package.
             google.charts.load('current', {
                 'packages': ['corechart']
@@ -132,10 +224,6 @@ function getAllApplicantLocation(){
                 var arrayLocationsToShow = [];
                 $.each(msg['location'], function (index, value) {
                     $.each(msg['location'][index], function (index, value) {
-                        // dataApplicantStatus.addRows([
-                        //     [index, parseInt(value)],
-                        // ]);
-                        // console.log('LatLng for ' + index + " :" +getLatLng(index)[0]);
                         arrayLocationsToShow.push([getLatLng(index)[0], getLatLng(index)[1], index + ': ' + value]);
                     });
                 });
@@ -146,37 +234,6 @@ function getAllApplicantLocation(){
                 dataApplicantLocation.addColumn('string', 'Name');
                 dataApplicantLocation.addRows(arrayLocationsToShow);
 
-                var data = google.visualization.arrayToDataTable([
-                    ['Lat', 'Long', 'Name'],
-                    // [14.6091, 121.0223, 'NCR'],
-                    [14.5764, 121.0851, 'Pasig'],
-                    [14.5547, 121.0244, 'Makati'],
-                    [14.6507, 121.1029, 'Marikina'],
-                    [14.5794, 121.0359, 'Mandaluyong'],
-                    [14.6760, 121.0437, 'Quezon'],
-                    [14.7566, 121.0450, 'Caloocan'],
-                    [14.5378, 121.0014, 'Pasay'],
-                    [14.4793, 121.0198, 'Parañaque'],
-                    [14.4081, 121.0415, 'Muntinlupa'],
-                    [14.4445, 120.9939, 'Las Piñas'],
-                    [14.5176, 121.0509, 'Taguig'],
-                    [16.0832, 120.6200, 'Ilocos Region'],
-                    [16.9754, 121.8107, 'Cagayan Valley'],
-                    [15.4828, 120.7120, 'Central Luzon'],
-                    [14.1008, 121.0794, 'CALABARZON'],
-                    [9.8432, 118.7365, 'MIMAROPA'],
-                    [13.4210, 123.4137, 'Bicol Region'],
-                    [11.0050, 122.5373, 'Western Visayas'],
-                    [9.8169, 124.0641, 'Central Visayas'],
-                    [12.2446, 125.0388, 'Eastern Visayas'],
-                    [8.1541, 123.2588, 'Zamboanga Peninsula'],
-                    [8.0202, 124.6857, 'Northern Mindanao'],
-                    [7.3042, 126.0893, 'Davao Region'],
-                    [6.2707, 124.6857, 'SOCCSKSARGEN'],
-                    [8.8015, 125.7407, 'CARAGA'],
-                    [6.9568, 124.2422, 'ARMM'],
-                    [17.3513, 121.1719, 'Cordillera Administrative Region'],
-                ]);
                 var options = {
                     height: 700,
                     mapType: 'normal',
