@@ -297,7 +297,7 @@
     </script> -->
 
     <!-- Age Bracket Function -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         // Age Bracket Chart
         google.charts.load("current", {
             packages: ['corechart']
@@ -313,7 +313,7 @@
                 ["26-30", 200, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"],
                 ["31-35", 300, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"],
                 ["36-42", 400, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"],
-                ["42-50", 500, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"],
+                ["43-50", 500, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"],
                 ["51 and up", 600, "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"]
             ]);
 
@@ -341,7 +341,7 @@
             var chart = new google.visualization.ColumnChart(document.getElementById("ageBracketChart"));
             chart.draw(view, options);
         }
-    </script>
+    </script> -->
 
     <!-- <script type="text/javascript">
         // Load the Visualization API and the corechart package.

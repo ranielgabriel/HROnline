@@ -4,6 +4,7 @@ $(document).ready(function () {
     
     getAllMonthlyApplicant();
     getAllApplicantSource();
+    getAllApplicantAge();
     getAllApplicantStatus();
     getAllApplicantLocation();
 
@@ -31,7 +32,6 @@ function getAllMonthlyApplicant(){
                         arrayMonthlyApplicantsToShow.push([index, parseInt(value), value, parseInt(msg['quickApplyApplicants'][0][index]), msg['quickApplyApplicants'][0][index]]);
                     });
                 });
-                console.log(arrayMonthlyApplicantsToShow);
                 
                 var dataMonthlyApplicants = new google.visualization.DataTable();
                 dataMonthlyApplicants.addColumn('string', 'Month');
@@ -46,22 +46,7 @@ function getAllMonthlyApplicant(){
                     type: 'string',
                     role: 'annotation'
                 });
-                
 
-                // dataMonthlyApplicants.addRows([
-                //     ['January', 100, '100', 25, '25'],
-                //     ['February', 1170, '1170', 460, '460'],
-                //     ['March', 11700, '11700', 460, '460'],
-                //     ['April', 11220, '11220', 460, '460'],
-                //     ['May', 10470, '10470', 460, '460'],
-                //     ['June', 2050, '2050', 460, '460'],
-                //     ['July', 8170, '8170', 460, '460'],
-                //     ['August', 7170, '7170', 460, '460'],
-                //     ['September', 6170, '6170', 460, '460'],
-                //     ['October', 4170, '4170', 460, '460'],
-                //     ['November', 660, '660', 1120, '1120'],
-                //     ['December', 9030, '9030', 54, '54']
-                // ]);
                 dataMonthlyApplicants.addRows(arrayMonthlyApplicantsToShow);
 
                 var options = {
@@ -90,10 +75,119 @@ function getAllMonthlyApplicant(){
                         groupWidth: '70%'
                     },
                     backgroundColor: 'transparent',
-                    dataOpacity: .8
+                    dataOpacity: .8,
+                    height: 700
                 };
                 var chart = new google.visualization.ColumnChart(document.getElementById('monthlyApplicantsChart'));
                 chart.draw(dataMonthlyApplicants, options);
+            }
+        }
+    });
+}
+
+function getAllApplicantAge(){
+    $.ajax({
+        url: 'api/reports/getAllApplicantAge.php',
+        type: 'GET',
+        success: function (msg) {
+            // Age Bracket Chart
+            google.charts.load("current", {
+                packages: ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var dataAgeBracket = new google.visualization.DataTable();
+
+                dataAgeBracket.addColumn('string', 'Age Bracket');
+                dataAgeBracket.addColumn('number', 'Number of Applicants')
+                dataAgeBracket.addColumn({type: 'string', role: "style"});
+
+                $.each(msg['age'], function (index, value) {
+                    $.each(msg['age'][index], function (index, value) {
+                        dataAgeBracket.addRows([
+                            [index, parseInt(value), "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"]
+                        ]);
+                    });
+                });
+
+                var view = new google.visualization.DataView(dataAgeBracket);
+                view.setColumns([0, 1,
+                    {
+                        calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation"
+                    },
+                    2
+                ]);
+
+                var options = {
+                    // title: "Monthly Applicants",
+                    bar: {
+                        groupWidth: "80%"
+                    },
+                    legend: {
+                        position: "none"
+                    },
+                    backgroundColor: 'transparent',
+                    height: 500
+                };
+                var chart = new google.visualization.ColumnChart(document.getElementById("ageBracketChart"));
+                chart.draw(view, options);
+            }
+        }
+    });
+}
+
+function getAllApplicantStatus() {
+    $.ajax({
+        url: 'api/reports/getAllApplicantStatus.php',
+        type: 'GET',
+        success: function (msg) {
+
+            // Load the Visualization API and the corechart package.
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
+                // Create the data table.
+                var dataApplicantStatus = new google.visualization.DataTable();
+                dataApplicantStatus.addColumn('string', 'Status');
+                dataApplicantStatus.addColumn('number', 'Applicants');
+
+                $.each(msg['status'], function (index, value) {
+                    $.each(msg['status'][index], function (index, value) {
+                        dataApplicantStatus.addRows([
+                            [index, parseInt(value)],
+                        ]);
+                    });
+                });
+
+                // Set chart options
+                var options = {
+                    // 'title': 'How Much Pizza I Ate Last Night',
+                    legend: {
+                        position: 'top',
+                        alignment: 'center'
+                    },
+                    // 'width': 400,
+                    height: 700,
+                    is3D: true,
+                    backgroundColor: 'transparent',
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('applicantStatusChart'));
+                chart.draw(dataApplicantStatus, options);
             }
         }
     });
@@ -146,64 +240,6 @@ function getAllApplicantSource() {
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('applicantSourceChart'));
                 chart.draw(dataApplicantSource, options);
-            }
-        }
-    });
-}
-
-function getAllApplicantStatus() {
-    $.ajax({
-        url: 'api/reports/getAllApplicantStatus.php',
-        type: 'GET',
-        success: function (msg) {
-
-            // Load the Visualization API and the corechart package.
-            google.charts.load('current', {
-                'packages': ['corechart']
-            });
-
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.charts.setOnLoadCallback(drawChart);
-
-            // Callback that creates and populates a data table,
-            // instantiates the pie chart, passes in the data and
-            // draws it.
-            function drawChart() {
-                // Create the data table.
-                var dataApplicantStatus = new google.visualization.DataTable();
-                dataApplicantStatus.addColumn('string', 'Status');
-                dataApplicantStatus.addColumn('number', 'Applicants');
-                // dataApplicantStatus.addRows([
-                //     ['Pending', 3],
-                //     ['No Show', 1],
-                //     ['Interview', 1],
-                //     ['Fail/Reject', 1],
-                // ]);
-
-                $.each(msg['status'], function (index, value) {
-                    $.each(msg['status'][index], function (index, value) {
-                        dataApplicantStatus.addRows([
-                            [index, parseInt(value)],
-                        ]);
-                    });
-                });
-
-                // Set chart options
-                var options = {
-                    // 'title': 'How Much Pizza I Ate Last Night',
-                    legend: {
-                        position: 'top',
-                        alignment: 'center'
-                    },
-                    // 'width': 400,
-                    height: 700,
-                    is3D: true,
-                    backgroundColor: 'transparent',
-                };
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.PieChart(document.getElementById('applicantStatusChart'));
-                chart.draw(dataApplicantStatus, options);
             }
         }
     });

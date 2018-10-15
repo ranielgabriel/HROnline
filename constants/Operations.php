@@ -10,12 +10,12 @@ class Operations
 
 	function __construct(){
 
-	// Constructor for connection
-	require_once dirname(__FILE__).'/DbConnect.php';
+		// Constructor for connection
+		require_once dirname(__FILE__).'/DbConnect.php';
 
-	$db = new DbConnect();
+		$db = new DbConnect();
 
-	$this->con = $db->connect();
+		$this->con = $db->connect();
 
 	}
 
@@ -150,6 +150,28 @@ class Operations
 		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-11-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-11-30' THEN 1 ELSE 0 END) as 'November', 
 		SUM(CASE WHEN DATE_FORMAT(`Timestamp`, '%Y-%m-%d') >= '".$currentYear."-12-01' AND DATE_FORMAT(`Timestamp`, '%Y-%m-%d') <= '".$currentYear."-12-31' THEN 1 ELSE 0 END) as 'December'  
 		FROM tbl_quick_applications";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
+	function getAllApplicantAge(){
+		$stmt = "SELECT 
+		SUM(CASE WHEN `Age` >= 18 AND `Age` <= 25 THEN 1 ELSE 0 END) as '18 to 25',
+		SUM(CASE WHEN `Age` >= 26 AND `Age` <= 30 THEN 1 ELSE 0 END) as '26 to 30',
+		SUM(CASE WHEN `Age` >= 31 AND `Age` <= 35 THEN 1 ELSE 0 END) as '31 to 35',
+		SUM(CASE WHEN `Age` >= 36 AND `Age` <= 42 THEN 1 ELSE 0 END) as '36 to 42',
+		SUM(CASE WHEN `Age` >= 43 AND `Age` <= 50 THEN 1 ELSE 0 END) as '43 to 50',
+		SUM(CASE WHEN `Age` >= 51 THEN 1 ELSE 0 END) as '51 and up'
+		FROM tbl_application";
 
 		$result = $this->con->query($stmt);
 		$temp = array();
