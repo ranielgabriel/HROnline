@@ -140,6 +140,9 @@
     </body>
 
     <script src="api/js/reportsLogic.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFyMbzSLvFDAhAuKbi2KtWeqgD2Q9do3c">
+    </script>
 
     <!-- Side Nav Function -->
     <script>
@@ -532,7 +535,7 @@
     </script> -->
 
     <!-- Applicant Location Function -->
-    <script>
+    <!-- <script>
         google.charts.load('current', {
             'packages': ['map']
         });
@@ -552,6 +555,7 @@
                 [14.4793, 121.0198, 'Parañaque'],
                 [14.4081, 121.0415, 'Muntinlupa'],
                 [14.4445, 120.9939, 'Las Piñas'],
+                [14.5176, 121.0509, 'Taguig'],
                 [16.0832, 120.6200, 'Ilocos Region'],
                 [16.9754, 121.8107, 'Cagayan Valley'],
                 [15.4828, 120.7120, 'Central Luzon'],
@@ -580,5 +584,5 @@
 
             map.draw(data, options);
         };
-    </script>
+    </script> -->
 </html>
