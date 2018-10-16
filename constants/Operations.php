@@ -185,5 +185,25 @@ class Operations
 		return $temp;
 	}
 
+	function getAllJobTitle(){
+		$stmt = "SELECT 
+		DISTINCT position, 
+		COUNT(position) AS 'Total'
+		FROM tbl_application 
+		GROUP BY position 
+		ORDER BY `total` DESC";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
 // END OF CLASS //
 }

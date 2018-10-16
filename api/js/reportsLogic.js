@@ -1,16 +1,17 @@
 $(document).ready(function () {
 
     console.log('Page is ready.');
-    
+
     getAllMonthlyApplicant();
     getAllApplicantSource();
     getAllApplicantAge();
     getAllApplicantStatus();
+    getAllJobTitle();
     getAllApplicantLocation();
 
 });
 
-function getAllMonthlyApplicant(){
+function getAllMonthlyApplicant() {
     $.ajax({
         url: 'api/reports/getAllMonthlyApplicant.php',
         type: 'GET',
@@ -32,7 +33,7 @@ function getAllMonthlyApplicant(){
                         arrayMonthlyApplicantsToShow.push([index, parseInt(value), value, parseInt(msg['quickApplyApplicants'][0][index]), msg['quickApplyApplicants'][0][index]]);
                     });
                 });
-                
+
                 var dataMonthlyApplicants = new google.visualization.DataTable();
                 dataMonthlyApplicants.addColumn('string', 'Month');
                 dataMonthlyApplicants.addColumn('number', 'Applicants');
@@ -62,7 +63,7 @@ function getAllMonthlyApplicant(){
                             auraColor: 'none'
                         },
                         stem: {
-                            color: 'black',
+                            color: 'transparent',
                             length: 5
                         },
                         style: 'point'
@@ -72,11 +73,15 @@ function getAllMonthlyApplicant(){
                         alignment: 'center'
                     },
                     bar: {
-                        groupWidth: '70%'
+                        groupWidth: '75%'
                     },
                     backgroundColor: 'transparent',
                     dataOpacity: .8,
-                    height: 700
+                    height: 700,
+                    hAxis: {
+                        slantedText: true,
+                        slantedTextAngle: 90 // here you can even use 180
+                    }
                 };
                 var chart = new google.visualization.ColumnChart(document.getElementById('monthlyApplicantsChart'));
                 chart.draw(dataMonthlyApplicants, options);
@@ -85,7 +90,47 @@ function getAllMonthlyApplicant(){
     });
 }
 
-function getAllApplicantAge(){
+function getAllJobTitle() {
+    $.ajax({
+        url: 'api/reports/getAllJobTitle.php',
+        type: 'GET',
+        success: function (msg) {
+
+            var arrayJobTitlesToShow = [];
+            $.each(msg['position'], function (index, value) {
+                if(value['position'] == ''){
+                    arrayJobTitlesToShow.push([ 'None', parseInt(value['Total'])]);
+                }else{
+                    arrayJobTitlesToShow.push([value['position'], parseInt(value['Total'])]);
+                }
+            });
+
+            google.charts.load('current', {
+                'packages': ['table']
+            });
+            google.charts.setOnLoadCallback(drawTable);
+
+            function drawTable() {
+                var dataJobTitleApplicant = new google.visualization.DataTable();
+                dataJobTitleApplicant.addColumn('string', 'Job Title');
+                dataJobTitleApplicant.addColumn('number', 'Total');
+                dataJobTitleApplicant.addRows(arrayJobTitlesToShow);
+
+                var table = new google.visualization.Table(document.getElementById('jobTitleApplicantsChart'));
+
+                table.draw(dataJobTitleApplicant, {
+                    // showRowNumber: true,
+                    width: '100%',
+                    height: '50%',
+                    pagingButtons: 10,
+                    alternatingRowStyle: true
+                });
+            }
+        }
+    });
+}
+
+function getAllApplicantAge() {
     $.ajax({
         url: 'api/reports/getAllApplicantAge.php',
         type: 'GET',
@@ -102,7 +147,10 @@ function getAllApplicantAge(){
 
                 dataAgeBracket.addColumn('string', 'Age Bracket');
                 dataAgeBracket.addColumn('number', 'Number of Applicants')
-                dataAgeBracket.addColumn({type: 'string', role: "style"});
+                dataAgeBracket.addColumn({
+                    type: 'string',
+                    role: "style"
+                });
 
                 $.each(msg['age'], function (index, value) {
                     $.each(msg['age'][index], function (index, value) {
@@ -132,7 +180,18 @@ function getAllApplicantAge(){
                         position: "none"
                     },
                     backgroundColor: 'transparent',
-                    height: 500
+                    height: 500,
+                    annotations: {
+                        alwaysOutside: true,
+                        textStyle: {
+                            fontSize: 14,
+                            auraColor: 'none'
+                        },
+                        stem: {
+                            color: 'transparent',
+                        },
+                        style: 'point'
+                    },
                 };
                 var chart = new google.visualization.ColumnChart(document.getElementById("ageBracketChart"));
                 chart.draw(view, options);
@@ -245,7 +304,7 @@ function getAllApplicantSource() {
     });
 }
 
-function getAllApplicantLocation(){
+function getAllApplicantLocation() {
     $.ajax({
         url: 'api/reports/getAllApplicantLocation.php',
         type: 'GET',
@@ -254,7 +313,7 @@ function getAllApplicantLocation(){
                 'packages': ['map']
             });
             google.charts.setOnLoadCallback(drawMap);
-    
+
             function drawMap() {
 
                 var arrayLocationsToShow = [];
@@ -276,18 +335,18 @@ function getAllApplicantLocation(){
                     showTooltip: true,
                     showInfoWindow: true
                 };
-    
+
                 var map = new google.visualization.Map(document.getElementById('applicantLocationsChart'));
-    
+
                 map.draw(dataApplicantLocation, options);
             };
         }
     });
 }
 
-function getLatLng(location){
+function getLatLng(location) {
     var latlng = [];
-    switch(location) {
+    switch (location) {
         case 'Pasig':
             latlng[0] = 14.5764;
             latlng[1] = 121.0851;
