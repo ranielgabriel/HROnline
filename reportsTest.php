@@ -1,23 +1,10 @@
 <?php
-	
 	include('auth.php');/*session_start()*/
 	include('connect.php');
 	$currentYear ="";
 	//unset($_SESSION['currentYear']);
-	$_SESSION['previous-page'] = 'reports.php';
+	$_SESSION['previous-page'] = 'reportsTest.php';
 	$id = $_SESSION['id'];
-	$startDate = "2017-01-01";
-	$endDate = date('Y-m-d');
-	/* if(isset($_POST['startDate'])){
-		$startDate = $_POST['startDate'];
-		$endDate = $_POST['endDate'];
-		unset($_POST['startDate']);
-		unset($_POST['endDate']);
-	}else{
-		$startDate = date('Y-m-d', strtotime('first day of this month'));
-		$endDate = date('Y-m-d', strtotime('-1d')); 
-	} */
-	$currentYear = date('Y',strtotime($endDate)); 
 ?>
 <html>
 
@@ -88,7 +75,7 @@
             }
         </style>
 
-        <div style="position:fixed;bottom:20px;right:20px;z-index:100;background-color:#f44336;color:#fff;box-shadow:0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12)" id="printReport" class="btn" onclick="save()">Print</div>
+        <!-- <div style="position:fixed;bottom:20px;right:20px;z-index:100;background-color:#f44336;color:#fff;box-shadow:0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12)" id="printReport" class="btn" onclick="save()">Print</div> -->
 
         <div id="main">
             <div class="row" style="z-index:1; width:100%; margin-top:-20px; background-color:#dfe5ec;" id='topDiv'>
@@ -133,6 +120,10 @@
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
                 <h1 class="text-center">Applicant Locations</h1>
+                <center>
+                    <button id="btnMapView" class="btn btn-primary active">Map View</button>
+                    <button id="btnGraphView" class="btn btn-primary">Graph View</button>
+                </center>
                 <div id="applicantLocationsChart"></div>
             </div>
 

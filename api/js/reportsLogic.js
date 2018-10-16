@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     console.log('Page is ready.');
 
     getAllMonthlyApplicant();
@@ -7,7 +6,19 @@ $(document).ready(function () {
     getAllApplicantAge();
     getAllApplicantStatus();
     getAllJobTitle();
-    getAllApplicantLocation();
+    getAllApplicantLocation('Map');
+
+    $('#btnMapView').click(function (){
+        getAllApplicantLocation('Map');
+        $(this).addClass('active');
+        $('#btnGraphView').removeClass('active');
+    });
+
+    $('#btnGraphView').click(function (){
+        getAllApplicantLocation('Graph');
+        $(this).addClass('active');
+        $('#btnMapView').removeClass('active');
+    });
 
 });
 
@@ -304,42 +315,110 @@ function getAllApplicantSource() {
     });
 }
 
-function getAllApplicantLocation() {
+function getAllApplicantLocation(viewType) {
     $.ajax({
         url: 'api/reports/getAllApplicantLocation.php',
         type: 'GET',
         success: function (msg) {
-            google.charts.load('current', {
-                'packages': ['map']
-            });
-            google.charts.setOnLoadCallback(drawMap);
-
-            function drawMap() {
-
-                var arrayLocationsToShow = [];
-                $.each(msg['location'], function (index, value) {
-                    $.each(msg['location'][index], function (index, value) {
-                        arrayLocationsToShow.push([getLatLng(index)[0], getLatLng(index)[1], index + ': ' + value]);
-                    });
+            if (viewType == 'Map'){
+                google.charts.load('current', {
+                    'packages': ['map']
                 });
+                google.charts.setOnLoadCallback(drawMap);
+    
+                function drawMap() {
+    
+                    var arrayLocationsToShow = [];
+    
+                    $.each(msg['location'], function (index, value) {
+                        if(getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none'){
+                            arrayLocationsToShow.push([getLatLng(value['Place'])[0], getLatLng(value['Place'])[1], value['Place'] + ': ' + value['Total']]);
+                        }
+                    });
+    
+                    var dataApplicantLocation = new google.visualization.DataTable();
+                    dataApplicantLocation.addColumn('number', 'Lat');
+                    dataApplicantLocation.addColumn('number', 'Long');
+                    dataApplicantLocation.addColumn('string', 'Name');
+                    dataApplicantLocation.addRows(arrayLocationsToShow);
+    
+                    var options = {
+                        height: 700,
+                        mapType: 'normal',
+                        showTooltip: true,
+                        showInfoWindow: true
+                    };
+    
+                    var map = new google.visualization.Map(document.getElementById('applicantLocationsChart'));
+    
+                    map.draw(dataApplicantLocation, options);
+                };
+            }else if (viewType == 'Graph'){
+
+            // Age Bracket Chart
+            google.charts.load("current", {
+                packages: ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
 
                 var dataApplicantLocation = new google.visualization.DataTable();
-                dataApplicantLocation.addColumn('number', 'Lat');
-                dataApplicantLocation.addColumn('number', 'Long');
-                dataApplicantLocation.addColumn('string', 'Name');
-                dataApplicantLocation.addRows(arrayLocationsToShow);
+                dataApplicantLocation.addColumn('string', 'Place');
+                dataApplicantLocation.addColumn('number', 'Applicant number');
+                dataApplicantLocation.addColumn({
+                    type: 'string',
+                    role: "style"
+                });
+
+                $.each(msg['location'], function (index, value) {
+                    if(getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none'){
+                        dataApplicantLocation.addRows([
+                            [value['Place'], parseInt(value['Total']), "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"]
+                        ]);
+                    }
+                });
+
+                var view = new google.visualization.DataView(dataApplicantLocation);
+                view.setColumns([0, 1,
+                    {
+                        calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation"
+                    },
+                    2
+                ]);
 
                 var options = {
-                    height: 700,
-                    mapType: 'normal',
-                    showTooltip: true,
-                    showInfoWindow: true
+                    // title: "Monthly Applicants",
+                    bar: {
+                        groupWidth: "80%"
+                    },
+                    legend: {
+                        position: "none"
+                    },
+                    backgroundColor: 'transparent',
+                    annotations: {
+                        alwaysOutside: true,
+                        textStyle: {
+                            fontSize: 14,
+                            auraColor: 'none'
+                        },
+                        stem: {
+                            color: 'transparent',
+                        },
+                        style: 'point'
+                    },
+                    hAxis:{
+                        slantedText: true,
+                        slantedTextAngle: 90
+                    }
                 };
-
-                var map = new google.visualization.Map(document.getElementById('applicantLocationsChart'));
-
-                map.draw(dataApplicantLocation, options);
-            };
+                var chart = new google.visualization.ColumnChart(document.getElementById("applicantLocationsChart"));
+                chart.draw(view, options);
+            }
+            }
         }
     });
 }
@@ -347,6 +426,10 @@ function getAllApplicantLocation() {
 function getLatLng(location) {
     var latlng = [];
     switch (location) {
+        case 'Metro Manila (NCR)':
+            latlng[0] = 14.5995;
+            latlng[1] = 120.9842;
+            return latlng;
         case 'Pasig':
             latlng[0] = 14.5764;
             latlng[1] = 121.0851;
@@ -363,7 +446,7 @@ function getLatLng(location) {
             latlng[0] = 14.5794;
             latlng[1] = 121.0359;
             return latlng;
-        case 'Quezon':
+        case 'Quezon City':
             latlng[0] = 14.6760;
             latlng[1] = 121.0437;
             return latlng;
@@ -407,7 +490,7 @@ function getLatLng(location) {
             latlng[0] = 14.1008;
             latlng[1] = 121.0794;
             return latlng;
-        case 'MIMAROPA':
+        case 'MIMARO':
             latlng[0] = 9.8432;
             latlng[1] = 118.7365;
             return latlng;
@@ -456,6 +539,8 @@ function getLatLng(location) {
             latlng[1] = 121.1719;
             return latlng;
         default:
-            return 'None';
+            latlng[0] = 'none';
+            latlng[1] = 'none';
+            return latlng;
     }
 }
