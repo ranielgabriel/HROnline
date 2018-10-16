@@ -19,7 +19,6 @@ $(document).ready(function () {
         $(this).addClass('active');
         $('#btnMapView').removeClass('active');
     });
-
 });
 
 function getAllMonthlyApplicant() {
