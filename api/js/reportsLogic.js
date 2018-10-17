@@ -565,6 +565,7 @@ function getAllApplicantLocation(viewType) {
 function getLatLng(location) {
     var latlng = [];
     switch (location) {
+        // METRO MANILA
         case 'Metro Manila (NCR)':
             latlng[0] = 14.5995;
             latlng[1] = 120.9842;
@@ -613,70 +614,91 @@ function getLatLng(location) {
             latlng[0] = 14.5176;
             latlng[1] = 121.0509;
             return latlng;
-        case 'Ilocos Region':
-            latlng[0] = 16.0832;
-            latlng[1] = 120.6200;
-            return latlng;
-        case 'Cagayan Valley':
-            latlng[0] = 16.9754;
-            latlng[1] = 121.8107;
-            return latlng;
+        
+        // CENTRAL LUZON
         case 'Central Luzon':
             latlng[0] = 15.4828;
             latlng[1] = 120.7120;
             return latlng;
-        case 'CALABARZON':
-            latlng[0] = 14.1008;
-            latlng[1] = 121.0794;
+        
+        // CALABARZON
+        case 'Cavite':
+        latlng[0] = 14.2456;
+        latlng[1] = 120.8786;
+        return latlng;
+        case 'Rizal':
+            latlng[0] = 14.6037;
+            latlng[1] = 121.3084;
             return latlng;
-        case 'MIMARO':
-            latlng[0] = 9.8432;
-            latlng[1] = 118.7365;
+        case 'Laguna':
+            latlng[0] = 14.1407;
+            latlng[1] = 121.4692;
             return latlng;
-        case 'Bicol Region':
-            latlng[0] = 13.4210;
-            latlng[1] = 123.4137;
+        case 'Batangas':
+        latlng[0] = 13.9450;
+        latlng[1] = 121.1312;
+        return latlng;
+        case 'Quezon':
+            latlng[0] = 13.9347;
+            latlng[1] = 121.9473;
             return latlng;
-        case 'Western Visayas':
-            latlng[0] = 11.0050;
-            latlng[1] = 122.5373;
-            return latlng;
-        case 'Central Visayas':
-            latlng[0] = 9.8169;
-            latlng[1] = 124.0641;
-            return latlng;
-        case 'Eastern Visayas':
-            latlng[0] = 12.2446;
-            latlng[1] = 125.0388;
-            return latlng;
-        case 'Zamboanga Peninsula':
-            latlng[0] = 8.1541;
-            latlng[1] = 123.2588;
-            return latlng;
-        case 'Northern Mindanao':
-            latlng[0] = 8.0202;
-            latlng[1] = 124.6857;
-            return latlng;
-        case 'Davao Region':
-            latlng[0] = 7.1907;
-            latlng[1] = 125.4553;
-            return latlng;
-        case 'SOCCSKSARGEN':
-            latlng[0] = 6.2707;
-            latlng[1] = 124.6857;
-            return latlng;
-        case 'CARAGA':
-            latlng[0] = 8.8015;
-            latlng[1] = 125.7407;
-            return latlng;
-        case 'ARMM':
-            latlng[0] = 6.9568;
-            latlng[1] = 124.2422;
-            return latlng;
-        case 'CAR':
-            latlng[0] = 17.3513;
-            latlng[1] = 121.1719;
-            return latlng;
+
+        // case 'Ilocos Region':
+        //     latlng[0] = 16.0832;
+        //     latlng[1] = 120.6200;
+        //     return latlng;
+        // case 'Cagayan Valley':
+        //     latlng[0] = 16.9754;
+        //     latlng[1] = 121.8107;
+        //     return latlng;
+        // case 'MIMARO':
+        //     latlng[0] = 9.8432;
+        //     latlng[1] = 118.7365;
+        //     return latlng;
+        // case 'Bicol Region':
+        //     latlng[0] = 13.4210;
+        //     latlng[1] = 123.4137;
+        //     return latlng;
+        // case 'Western Visayas':
+        //     latlng[0] = 11.0050;
+        //     latlng[1] = 122.5373;
+        //     return latlng;
+        // case 'Central Visayas':
+        //     latlng[0] = 9.8169;
+        //     latlng[1] = 124.0641;
+        //     return latlng;
+        // case 'Eastern Visayas':
+        //     latlng[0] = 12.2446;
+        //     latlng[1] = 125.0388;
+        //     return latlng;
+        // case 'Zamboanga Peninsula':
+        //     latlng[0] = 8.1541;
+        //     latlng[1] = 123.2588;
+        //     return latlng;
+        // case 'Northern Mindanao':
+        //     latlng[0] = 8.0202;
+        //     latlng[1] = 124.6857;
+        //     return latlng;
+        // case 'Davao Region':
+        //     latlng[0] = 7.1907;
+        //     latlng[1] = 125.4553;
+        //     return latlng;
+        // case 'SOCCSKSARGEN':
+        //     latlng[0] = 6.2707;
+        //     latlng[1] = 124.6857;
+        //     return latlng;
+        // case 'CARAGA':
+        //     latlng[0] = 8.8015;
+        //     latlng[1] = 125.7407;
+        //     return latlng;
+        // case 'ARMM':
+        //     latlng[0] = 6.9568;
+        //     latlng[1] = 124.2422;
+        //     return latlng;
+        // case 'CAR':
+        //     latlng[0] = 17.3513;
+        //     latlng[1] = 121.1719;
+        //     return latlng;
         default:
             latlng[0] = 'none';
             latlng[1] = 'none';

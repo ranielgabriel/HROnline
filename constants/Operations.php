@@ -79,6 +79,17 @@ class Operations
 		FROM tbl_application
         WHERE CURRENT_REGION != ''
 		GROUP BY CURRENT_REGION
+
+		UNION
+		
+		SELECT 
+		DISTINCT CURRENT_PROVINCE AS 'Place', 
+		COUNT(CURRENT_PROVINCE) AS 'Total' 
+		FROM tbl_application 
+		WHERE CURRENT_REGION = 'CALABARZON' AND
+        CURRENT_PROVINCE != ''
+		GROUP BY CURRENT_PROVINCE  
+		ORDER BY `Total`  DESC
 		";
 
 		$result = $this->con->query($stmt);
