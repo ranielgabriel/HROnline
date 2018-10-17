@@ -150,7 +150,7 @@ function getAllDailyApplicant() {
                 var quickApplyChart = new google.visualization.Calendar(document.getElementById('quickApplyDailyApplicantChart'));
 
                 var options = {
-                    title: "Anderson Group BPO, Inc. Daily Applicants",
+                    title: "Daily Applicants",
                     height: 350,
                     calendar: {
                         underYearSpace: 10, // Bottom padding for the year labels.
@@ -191,7 +191,7 @@ function getAllDailyApplicant() {
                     }
                 };
                 var quickApplyOptions = {
-                    title: "Anderson Group BPO, Inc. Quick Apply Daily Applicants",
+                    title: "Quick Apply Daily Applicants",
                     height: 350,
                     calendar: {
                         underYearSpace: 10, // Bottom padding for the year labels.

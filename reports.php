@@ -92,38 +92,38 @@
 
             <!--Div that will hold the pie chart-->
             <div class="col-md-12 container">
-                <h1 class="text-center">Monthly Applicants</h1>
+                <h1 class="text-center">Monthly Applicants Report</h1>
                 <div id="monthlyApplicantsChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 10% 0 10% 0">
-                <h1 class="text-center">Daily Applicants</h1>
+                <h1 class="text-center">Daily Applicants Report</h1>
                 <div id="dailyApplicantChart"></div>
                 <div id="quickApplyDailyApplicantChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
-                <h1 class="text-center">Job Title Applicants</h1>
+                <h1 class="text-center">Job Title Applicants Report</h1>
                 <div id="jobTitleApplicantsChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
-                <h1 class="text-center">Age Bracket Chart</h1>
+                <h1 class="text-center">Age Bracket Report</h1>
                 <div id="ageBracketChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
-                <h1 class="text-center">Applicants Status Chart</h1>
+                <h1 class="text-center">Applicants Status Report</h1>
                 <div id="applicantStatusChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
-                <h1 class="text-center">Applicants Source Chart</h1>
+                <h1 class="text-center">Applicants Source Report</h1>
                 <div id="applicantSourceChart"></div>
             </div>
 
             <div class="col-md-12 container" style="margin: 0 0 10% 0">
-                <h1 class="text-center">Applicants Location</h1>
+                <h1 class="text-center">Applicants Location Report</h1>
                 <center>
                     <button id="btnMapView" class="btn btn-primary active">Map View</button>
                     <button id="btnGraphView" class="btn btn-primary">Graph View</button>
