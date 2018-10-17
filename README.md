@@ -49,7 +49,11 @@ In adding features or when working something in the system, you must use branchi
 ### Important Files From the File Tree
 ```
 /HROnline
+|-api - This folder contains the api folder for the HR Online Recruits.
+    |js - This folder contains the js file for the reports.
+    |-reports - This folder contains all the api for the generation of reports.
 |-config - This folder contains some of the PHP files for queries in the HR Online Recruits.
+|-constants - This contains the connection string/operations/functions for the api folder for HR Online Recruits.
 |-css - This folder contains the CSS files of the HR Online Recruits.
 |-fonts - This folder contains the fonts of the HR Online Recruits.
 |-custom_css - This folder contains the custom CSS files of the HR Online Recruits.
@@ -60,13 +64,7 @@ In adding features or when working something in the system, you must use branchi
     |-css - This folder contains the CSS files for the quick apply.
     |-img - This folder contains the image files for the quick apply.
     |-api - This folder contains the API of the quick-apply feature of the system.
-        |-addQuickApplicant.php - This file is responsible for inserting a quick applicant data in the database and sending a mail to notify the HR.
-        |-deleteQuickApplicant.php - This file is for deleting a quick applicant in the database.
-        |-getAllPositions.php - This file is for retrieving/fetching all the positions to populate the "<select>" element in the quick-apply.
     |-constants - This folder contains all the constants values for the quick-apply feature.
-        |-Constants.php - This file contains the constant values for the connection string of the quick-apply feature.
-        |-DbConnect.php - This file is the connection string of the system to the MySQL database and Apache server for the quick-apply feature of the system.
-        |-Operations.php - This file is a class that holds all the methods to be used by the quick apply feature of the system.
     |-index.php - This file is the ~/application/quickapply/ or index file of the Quick Apply feature of the HR Online Recruits. If you want to add/remove/update any features in the system's ~/application/quickapply/ page, this is the file you need to edit.
 |-account.php - This file is for updating the currently logged in account.
 |-applicants.php - This file is for the Applicants List.
