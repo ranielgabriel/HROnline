@@ -122,6 +122,52 @@ class Operations
 		return $temp;
 	}
 
+	function getAllDailyApplicant(){
+		$currentYear = date('Y');
+		$stmt = "SELECT DISTINCT myTable.Date, SUM(myTable.Total) AS 'Total' FROM (
+			SELECT 
+			DATE_FORMAT(`Timestamp`, '%Y-%m-%d') AS 'Date', 
+			COUNT(DATE(`TIMESTAMP`)) AS 'Total'
+			FROM tbl_application
+			GROUP BY TIMESTAMP) AS myTable
+			WHERE myTable.Date LIKE '%2018%'
+        GROUP BY myTable.Date";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
+	function getAllQuickApplyDailyApplicant(){
+		$currentYear = date('Y');
+		$stmt = "SELECT DISTINCT myTable.Date, SUM(myTable.Total) AS 'Total' FROM (
+			SELECT 
+			DATE_FORMAT(`Timestamp`, '%Y-%m-%d') AS 'Date', 
+			COUNT(DATE(`TIMESTAMP`)) AS 'Total'
+			FROM tbl_quick_applications
+			GROUP BY TIMESTAMP) AS myTable
+			WHERE myTable.Date LIKE '%2018%'
+        GROUP BY myTable.Date";
+
+		$result = $this->con->query($stmt);
+		$temp = array();
+		if($result->num_rows>0){
+			while($row = mysqli_fetch_assoc($result)){
+				$temp[] = $row;
+			}
+		}
+
+		header('Content-type: application/json');
+		return $temp;
+	}
+
 	function getAllMonthlyQuickApplyApplicant(){
 		$currentYear = date('Y');
 		$stmt = "SELECT 

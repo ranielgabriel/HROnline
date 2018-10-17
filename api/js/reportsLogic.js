@@ -2,19 +2,20 @@ $(document).ready(function () {
     console.log('Page is ready.');
 
     getAllMonthlyApplicant();
+    getAllDailyApplicant();
     getAllApplicantSource();
     getAllApplicantAge();
     getAllApplicantStatus();
     getAllJobTitle();
     getAllApplicantLocation('Map');
 
-    $('#btnMapView').click(function (){
+    $('#btnMapView').click(function () {
         getAllApplicantLocation('Map');
         $(this).addClass('active');
         $('#btnGraphView').removeClass('active');
     });
 
-    $('#btnGraphView').click(function (){
+    $('#btnGraphView').click(function () {
         getAllApplicantLocation('Graph');
         $(this).addClass('active');
         $('#btnMapView').removeClass('active');
@@ -100,6 +101,145 @@ function getAllMonthlyApplicant() {
     });
 }
 
+function getAllDailyApplicant() {
+    $.ajax({
+        url: 'api/reports/getAllDailyApplicant.php',
+        type: 'GET',
+        success: function (msg) {
+            google.charts.load("current", {
+                packages: ["calendar"]
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var arrayDailyApplicantsToShow = [];
+                var arrayQuickApplyDailyApplicantsToShow = [];
+
+                $.each(msg['dailyApplicant'], function (index, value) {
+                    arrayDailyApplicantsToShow.push([new Date(value['Date']), parseInt(value['Total'])]);
+                });
+
+                $.each(msg['quickApplyDailyApplicant'], function (index, value) {
+                    arrayQuickApplyDailyApplicantsToShow.push([new Date(value['Date']), parseInt(value['Total'])]);
+                });
+
+                var dataDailyApplicantTable = new google.visualization.DataTable();
+                dataDailyApplicantTable.addColumn({
+                    type: 'date',
+                    id: 'Date'
+                });
+                dataDailyApplicantTable.addColumn({
+                    type: 'number',
+                    id: 'Applicant'
+                });
+
+                var dataQuickApplyDailyApplicantTable = new google.visualization.DataTable();
+                dataQuickApplyDailyApplicantTable.addColumn({
+                    type: 'date',
+                    id: 'Date'
+                });
+                dataQuickApplyDailyApplicantTable.addColumn({
+                    type: 'number',
+                    id: 'Applicant'
+                });
+
+                dataDailyApplicantTable.addRows(arrayDailyApplicantsToShow);
+                dataQuickApplyDailyApplicantTable.addRows(arrayQuickApplyDailyApplicantsToShow);
+
+                var chart = new google.visualization.Calendar(document.getElementById('dailyApplicantChart'));
+                var quickApplyChart = new google.visualization.Calendar(document.getElementById('quickApplyDailyApplicantChart'));
+
+                var options = {
+                    title: "Anderson Group BPO, Inc. Daily Applicants",
+                    height: 350,
+                    calendar: {
+                        underYearSpace: 10, // Bottom padding for the year labels.
+                        yearLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 32,
+                            color: '#2D5D7B',
+                            bold: true,
+                            italic: true
+                        },
+                        monthLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 12,
+                            color: '#2D5D7B',
+                            bold: true,
+                            italic: true
+                        },
+                        monthOutlineColor: {
+                            stroke: '#093A3E',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 2
+                        },
+                        unusedMonthOutlineColor: {
+                            stroke: '#093A3E',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 1
+                        },
+                        underMonthSpace: 16,
+                        cellColor: {
+                            stroke: '#76a7fa',
+                            strokeOpacity: 0.5,
+                            strokeWidth: 1,
+                        },
+                        cellSize: 20
+                    },
+                    noDataPattern: {
+                        backgroundColor: '#bebebe'
+                    }
+                };
+                var quickApplyOptions = {
+                    title: "Anderson Group BPO, Inc. Quick Apply Daily Applicants",
+                    height: 350,
+                    calendar: {
+                        underYearSpace: 10, // Bottom padding for the year labels.
+                        yearLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 32,
+                            color: '#2D5D7B',
+                            bold: true,
+                            italic: true
+                        },
+                        monthLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 12,
+                            color: '#2D5D7B',
+                            bold: true,
+                            italic: true
+                        },
+                        monthOutlineColor: {
+                            stroke: '#093A3E',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 2
+                        },
+                        unusedMonthOutlineColor: {
+                            stroke: '#093A3E',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 1
+                        },
+                        underMonthSpace: 16,
+                        cellColor: {
+                            stroke: '#76a7fa',
+                            strokeOpacity: 0.5,
+                            strokeWidth: 1,
+                        },
+                        cellSize: 20
+                    },
+                    noDataPattern: {
+                        backgroundColor: '#bebebe'
+                    }
+                }
+
+                chart.draw(dataDailyApplicantTable, options);
+                quickApplyChart.draw(dataQuickApplyDailyApplicantTable, quickApplyOptions);
+
+            }
+        }
+    });
+}
+
 function getAllJobTitle() {
     $.ajax({
         url: 'api/reports/getAllJobTitle.php',
@@ -108,9 +248,9 @@ function getAllJobTitle() {
 
             var arrayJobTitlesToShow = [];
             $.each(msg['position'], function (index, value) {
-                if(value['position'] == ''){
-                    arrayJobTitlesToShow.push([ 'None', parseInt(value['Total'])]);
-                }else{
+                if (value['position'] == '') {
+                    arrayJobTitlesToShow.push(['None', parseInt(value['Total'])]);
+                } else {
                     arrayJobTitlesToShow.push([value['position'], parseInt(value['Total'])]);
                 }
             });
@@ -319,104 +459,104 @@ function getAllApplicantLocation(viewType) {
         url: 'api/reports/getAllApplicantLocation.php',
         type: 'GET',
         success: function (msg) {
-            if (viewType == 'Map'){
+            if (viewType == 'Map') {
                 google.charts.load('current', {
                     'packages': ['map']
                 });
                 google.charts.setOnLoadCallback(drawMap);
-    
+
                 function drawMap() {
-    
+
                     var arrayLocationsToShow = [];
-    
+
                     $.each(msg['location'], function (index, value) {
-                        if(getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none'){
+                        if (getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none') {
                             arrayLocationsToShow.push([getLatLng(value['Place'])[0], getLatLng(value['Place'])[1], value['Place'] + ': ' + value['Total']]);
                         }
                     });
-    
+
                     var dataApplicantLocation = new google.visualization.DataTable();
                     dataApplicantLocation.addColumn('number', 'Lat');
                     dataApplicantLocation.addColumn('number', 'Long');
                     dataApplicantLocation.addColumn('string', 'Name');
                     dataApplicantLocation.addRows(arrayLocationsToShow);
-    
+
                     var options = {
                         height: 700,
                         mapType: 'normal',
                         showTooltip: true,
                         showInfoWindow: true
                     };
-    
+
                     var map = new google.visualization.Map(document.getElementById('applicantLocationsChart'));
-    
+
                     map.draw(dataApplicantLocation, options);
                 };
-            }else if (viewType == 'Graph'){
+            } else if (viewType == 'Graph') {
 
-            // Age Bracket Chart
-            google.charts.load("current", {
-                packages: ['corechart']
-            });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-
-                var dataApplicantLocation = new google.visualization.DataTable();
-                dataApplicantLocation.addColumn('string', 'Place');
-                dataApplicantLocation.addColumn('number', 'Applicant number');
-                dataApplicantLocation.addColumn({
-                    type: 'string',
-                    role: "style"
+                // Age Bracket Chart
+                google.charts.load("current", {
+                    packages: ['corechart']
                 });
+                google.charts.setOnLoadCallback(drawChart);
 
-                $.each(msg['location'], function (index, value) {
-                    if(getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none'){
-                        dataApplicantLocation.addRows([
-                            [value['Place'], parseInt(value['Total']), "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"]
-                        ]);
-                    }
-                });
+                function drawChart() {
 
-                var view = new google.visualization.DataView(dataApplicantLocation);
-                view.setColumns([0, 1,
-                    {
-                        calc: "stringify",
-                        sourceColumn: 1,
-                        type: "string",
-                        role: "annotation"
-                    },
-                    2
-                ]);
+                    var dataApplicantLocation = new google.visualization.DataTable();
+                    dataApplicantLocation.addColumn('string', 'Place');
+                    dataApplicantLocation.addColumn('number', 'Applicant number');
+                    dataApplicantLocation.addColumn({
+                        type: 'string',
+                        role: "style"
+                    });
 
-                var options = {
-                    // title: "Monthly Applicants",
-                    bar: {
-                        groupWidth: "80%"
-                    },
-                    legend: {
-                        position: "none"
-                    },
-                    backgroundColor: 'transparent',
-                    annotations: {
-                        alwaysOutside: true,
-                        textStyle: {
-                            fontSize: 14,
-                            auraColor: 'none'
+                    $.each(msg['location'], function (index, value) {
+                        if (getLatLng(value['Place'])[0] != 'none' || getLatLng(value['Place'])[1] != 'none') {
+                            dataApplicantLocation.addRows([
+                                [value['Place'], parseInt(value['Total']), "color: #17A398; fill-opacity: 0.7; stroke-color: black; stroke-width: 2; stroke-opacity: .5;"]
+                            ]);
+                        }
+                    });
+
+                    var view = new google.visualization.DataView(dataApplicantLocation);
+                    view.setColumns([0, 1,
+                        {
+                            calc: "stringify",
+                            sourceColumn: 1,
+                            type: "string",
+                            role: "annotation"
                         },
-                        stem: {
-                            color: 'transparent',
+                        2
+                    ]);
+
+                    var options = {
+                        // title: "Monthly Applicants",
+                        bar: {
+                            groupWidth: "80%"
                         },
-                        style: 'point'
-                    },
-                    hAxis:{
-                        slantedText: true,
-                        slantedTextAngle: 90
-                    }
-                };
-                var chart = new google.visualization.ColumnChart(document.getElementById("applicantLocationsChart"));
-                chart.draw(view, options);
-            }
+                        legend: {
+                            position: "none"
+                        },
+                        backgroundColor: 'transparent',
+                        annotations: {
+                            alwaysOutside: true,
+                            textStyle: {
+                                fontSize: 14,
+                                auraColor: 'none'
+                            },
+                            stem: {
+                                color: 'transparent',
+                            },
+                            style: 'point'
+                        },
+                        hAxis: {
+                            slantedText: true,
+                            slantedTextAngle: 90
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document.getElementById("applicantLocationsChart"));
+                    chart.draw(view, options);
+                }
             }
         }
     });
@@ -518,8 +658,8 @@ function getLatLng(location) {
             latlng[1] = 124.6857;
             return latlng;
         case 'Davao Region':
-            latlng[0] = 7.3042;
-            latlng[1] = 126.0893;
+            latlng[0] = 7.1907;
+            latlng[1] = 125.4553;
             return latlng;
         case 'SOCCSKSARGEN':
             latlng[0] = 6.2707;
