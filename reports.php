@@ -130,10 +130,10 @@
                 <div class="bootstrap-iso">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="form-group" style="margin-bottom:2%;">
-                            <label for="selectGender" style='color:black;'>Select Genderx</label>
+                            <label for="selectGender" style='color:black;'>Select Gender</label>
                             <select class="form-control" id="selectGender">
                                 <option selected disabled>Choose a gender...</option>
-                                <option>Both</option>
+                                <option>Any</option>
                                 <option>Male</option>
                                 <option>Female</option>
                                 <option>Other</option>

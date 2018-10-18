@@ -2,21 +2,21 @@ $(document).ready(function () {
     console.log('Page is ready.');
 
     getAllMonthlyApplicant('');
-    getAllDailyApplicant();
-    getAllApplicantSource();
-    getAllApplicantAge();
-    getAllApplicantStatus();
-    getAllJobTitle();
-    getAllApplicantLocation('Map');
+    getAllDailyApplicant('');
+    getAllApplicantSource('');
+    getAllApplicantAge('');
+    getAllApplicantStatus('');
+    getAllJobTitle('');
+    getAllApplicantLocation('Map', '');
 
     $('#btnMapView').click(function () {
-        getAllApplicantLocation('Map');
+        getAllApplicantLocation('Map', $('#selectGender').val());
         $(this).addClass('active');
         $('#btnGraphView').removeClass('active');
     });
 
     $('#btnGraphView').click(function () {
-        getAllApplicantLocation('Graph');
+        getAllApplicantLocation('Graph', $('#selectGender').val());
         $(this).addClass('active');
         $('#btnMapView').removeClass('active');
     });
@@ -34,22 +34,65 @@ $(document).ready(function () {
         switch (gender) {
             case 'Male':
             getAllMonthlyApplicant('Male');
+            getAllApplicantAge('Male');
+            getAllJobTitle('Male');
+            getAllDailyApplicant('Male');
+            getAllApplicantSource('Male');
+            getAllApplicantStatus('Male');
+            getAllApplicantLocation('Map', 'Male');
+            $('#btnMapView').addClass('active');
+            $('#btnGraphView').removeClass('active');
+
             break;
 
             case 'Female':
             getAllMonthlyApplicant('Female');
+            getAllApplicantAge('Female');
+            getAllJobTitle('Female');
+            getAllDailyApplicant('Female');
+            getAllApplicantSource('Female');
+            getAllApplicantStatus('Female');
+            getAllApplicantLocation('Map', 'Female');
+            $('#btnMapView').addClass('active');
+            $('#btnGraphView').removeClass('active');
             break;
 
             case 'Other':
             getAllMonthlyApplicant('Preferred not to answer');
+            getAllApplicantAge('Preferred not to answer');
+            getAllJobTitle('Preferred not to answer');
+            getAllDailyApplicant('Preferred not to answer');
+            getAllApplicantSource('Preferred not to answer');
+            getAllApplicantStatus('Preferred not to answer');
+            getAllApplicantLocation('Map', 'Preferred not to answer');
+            $('#btnMapView').addClass('active');
+            $('#btnGraphView').removeClass('active');
             break;
 
-            case 'Both':
+            case 'Any':
             getAllMonthlyApplicant('');
+            getAllApplicantAge('');
+            getAllJobTitle('');
+            getAllDailyApplicant('');
+            getAllApplicantSource('');
+            getAllApplicantStatus('');
+            getAllApplicantLocation('Map', '');
+            $('#btnMapView').addClass('active');
+            $('#btnGraphView').removeClass('active');
+
             break;
 
             default:
             getAllMonthlyApplicant('');
+            getAllApplicantAge('');
+            getAllJobTitle('');
+            getAllDailyApplicant('');
+            getAllApplicantSource('');
+            getAllApplicantStatus('');
+            getAllApplicantLocation('Map', '');
+            $('#btnMapView').addClass('active');
+            $('#btnGraphView').removeClass('active');
+
             break;
         }
     });
@@ -71,12 +114,8 @@ function getAllMonthlyApplicant(gender) {
             function drawAnnotations() {
                 var arrayMonthlyApplicantsToShow = [];
 
-                // for (var i = 0; msg['applicants'].length; i++){
-
                 $.each(msg['applicants'], function (index, value) {
                     $.each(msg['applicants'][index], function (index, value) {
-                        // console.log(index + ": " + value);
-                        // console.log(msg['quickApplyApplicants'][0][index]);
                         arrayMonthlyApplicantsToShow.push([index, parseInt(value), value, parseInt(msg['quickApplyApplicants'][0][index]), msg['quickApplyApplicants'][0][index]]);
                     });
                 });
@@ -137,10 +176,13 @@ function getAllMonthlyApplicant(gender) {
     });
 }
 
-function getAllDailyApplicant() {
+function getAllDailyApplicant(gender) {
     $.ajax({
         url: 'api/reports/getAllDailyApplicant.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
             google.charts.load("current", {
                 packages: ["calendar"]
@@ -276,10 +318,13 @@ function getAllDailyApplicant() {
     });
 }
 
-function getAllJobTitle() {
+function getAllJobTitle(gender) {
     $.ajax({
         url: 'api/reports/getAllJobTitle.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
 
             var arrayJobTitlesToShow = [];
@@ -316,11 +361,15 @@ function getAllJobTitle() {
     });
 }
 
-function getAllApplicantAge() {
+function getAllApplicantAge(gender) {
     $.ajax({
         url: 'api/reports/getAllApplicantAge.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
+            console.log(msg);
             // Age Bracket Chart
             google.charts.load("current", {
                 packages: ['corechart']
@@ -386,10 +435,13 @@ function getAllApplicantAge() {
     });
 }
 
-function getAllApplicantStatus() {
+function getAllApplicantStatus(gender) {
     $.ajax({
         url: 'api/reports/getAllApplicantStatus.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
 
             // Load the Visualization API and the corechart package.
@@ -438,10 +490,13 @@ function getAllApplicantStatus() {
     });
 }
 
-function getAllApplicantSource() {
+function getAllApplicantSource(gender) {
     $.ajax({
         url: 'api/reports/getAllApplicantSource.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
 
             // Load the Visualization API and the corechart package.
@@ -490,10 +545,13 @@ function getAllApplicantSource() {
     });
 }
 
-function getAllApplicantLocation(viewType) {
+function getAllApplicantLocation(viewType, gender) {
     $.ajax({
         url: 'api/reports/getAllApplicantLocation.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
             if (viewType == 'Map') {
                 google.charts.load('current', {

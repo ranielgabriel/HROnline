@@ -19,7 +19,7 @@ class Operations
 
 	}
 
-	function getAllApplicantSource(){
+	function getAllApplicantSource($gender){
 		$stmt = "SELECT source_name FROM tbl_sourceapplication WHERE flag = 0";
 		$result = $this->con->query($stmt);
 		$temp = array();
@@ -27,7 +27,7 @@ class Operations
 			while($row = mysqli_fetch_assoc($result)){
 				// $temp[] = $row;
 				$source = $row['source_name'];
-				$temp[] = $this->getAllApplicantBySource($source);
+				$temp[] = $this->getAllApplicantBySource($source, $gender);
 			}
 		}
 
@@ -35,20 +35,34 @@ class Operations
 		return $temp;
 	}
 
-	function getAllApplicantBySource($source){
+	function getAllApplicantBySource($source, $gender){
 		$stmt = "SELECT SUM(CASE WHEN tbl_application.APPLICATION_SOURCE ='$source' THEN 1 ELSE 0 END) AS '$source' FROM tbl_application";
+
+		if ($gender != ''){
+			$stmt = "SELECT SUM(CASE WHEN tbl_application.APPLICATION_SOURCE ='$source' THEN 1 ELSE 0 END) AS '$source' FROM tbl_application WHERE `Gender` = '".$gender."'";
+		}
+
 		$result = $this->con->query($stmt);
 		// header('Content-type: application/json');
 		return mysqli_fetch_assoc($result);
 	}
 
-	function getAllApplicantStatus(){
+	function getAllApplicantStatus($gender){
 		$stmt = "SELECT 
 		SUM(CASE WHEN tbl_application.status ='Pending' THEN 1 ELSE 0 END) AS 'Pending',
 		SUM(CASE WHEN tbl_application.status ='No Show' THEN 1 ELSE 0 END) AS 'No Show',
 		SUM(CASE WHEN tbl_application.status LIKE '%Interview%' THEN 1 ELSE 0 END) AS 'Interview',
 		SUM(CASE WHEN tbl_application.status ='Rejected' THEN 1 ELSE 0 END) AS 'Fail/Reject'
 		FROM tbl_application";
+
+		if($gender != ''){
+			$stmt = "SELECT 
+			SUM(CASE WHEN tbl_application.status ='Pending' AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) AS 'Pending',
+			SUM(CASE WHEN tbl_application.status ='No Show' AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) AS 'No Show',
+			SUM(CASE WHEN tbl_application.status LIKE '%Interview%' AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) AS 'Interview',
+			SUM(CASE WHEN tbl_application.status ='Rejected' AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) AS 'Fail/Reject'
+			FROM tbl_application";
+		}
 
 		$result = $this->con->query($stmt);
 		$temp = array();
@@ -62,7 +76,7 @@ class Operations
 		return $temp;
 	}
 
-	function getAllApplicantLocation(){
+	function getAllApplicantLocation($gender){
 		$stmt ="SELECT 
 		DISTINCT CURRENT_MUNICIPALITY AS 'Place', 
 		COUNT(CURRENT_MUNICIPALITY) AS 'Total'
@@ -91,6 +105,40 @@ class Operations
 		GROUP BY CURRENT_PROVINCE  
 		ORDER BY `Total`  DESC
 		";
+
+		if($gender != ''){
+			$stmt ="SELECT 
+			DISTINCT CURRENT_MUNICIPALITY AS 'Place', 
+			COUNT(CURRENT_MUNICIPALITY) AS 'Total'
+			FROM tbl_application
+			WHERE tbl_application.CURRENT_REGION = 'Metro Manila (NCR)' AND
+			CURRENT_MUNICIPALITY != '' AND
+			`GENDER` = '".$gender."'
+			GROUP BY CURRENT_MUNICIPALITY
+			
+			UNION
+			
+			SELECT 
+			DISTINCT CURRENT_REGION AS 'Place', 
+			COUNT(CURRENT_REGION) AS 'Total'
+			FROM tbl_application
+			WHERE CURRENT_REGION != '' AND
+			`GENDER` = '".$gender."'
+			GROUP BY CURRENT_REGION
+
+			UNION
+			
+			SELECT 
+			DISTINCT CURRENT_PROVINCE AS 'Place', 
+			COUNT(CURRENT_PROVINCE) AS 'Total' 
+			FROM tbl_application 
+			WHERE CURRENT_REGION = 'CALABARZON' AND
+			CURRENT_PROVINCE != '' AND
+			`GENDER` = '".$gender."'
+			GROUP BY CURRENT_PROVINCE  
+			ORDER BY `Total`  DESC
+			";
+		}
 
 		$result = $this->con->query($stmt);
 		$temp = array();
@@ -151,7 +199,7 @@ class Operations
 		return $temp;
 	}
 
-	function getAllDailyApplicant(){
+	function getAllDailyApplicant($gender){
 		$currentYear = date('Y');
 		$stmt = "SELECT DISTINCT myTable.Date, SUM(myTable.Total) AS 'Total' FROM (
 			SELECT 
@@ -161,6 +209,18 @@ class Operations
 			GROUP BY TIMESTAMP) AS myTable
 			WHERE myTable.Date LIKE '%2018%'
         GROUP BY myTable.Date";
+
+		if ($gender != ''){
+			$stmt = "SELECT DISTINCT myTable.Date, SUM(myTable.Total) AS 'Total' FROM (
+				SELECT 
+				DATE_FORMAT(`Timestamp`, '%Y-%m-%d') AS 'Date', 
+				COUNT(DATE(`TIMESTAMP`)) AS 'Total'
+				FROM tbl_application
+				WHERE `Gender` = '".$gender."'
+				GROUP BY TIMESTAMP) AS myTable
+				WHERE myTable.Date LIKE '%2018%'
+			GROUP BY myTable.Date";
+		}
 
 		$result = $this->con->query($stmt);
 		$temp = array();
@@ -226,7 +286,7 @@ class Operations
 		return $temp;
 	}
 
-	function getAllApplicantAge(){
+	function getAllApplicantAge($gender){
 		$stmt = "SELECT 
 		SUM(CASE WHEN `Age` >= 18 AND `Age` <= 25 THEN 1 ELSE 0 END) as '18 to 25',
 		SUM(CASE WHEN `Age` >= 26 AND `Age` <= 30 THEN 1 ELSE 0 END) as '26 to 30',
@@ -235,6 +295,17 @@ class Operations
 		SUM(CASE WHEN `Age` >= 43 AND `Age` <= 50 THEN 1 ELSE 0 END) as '43 to 50',
 		SUM(CASE WHEN `Age` >= 51 THEN 1 ELSE 0 END) as '51 and up'
 		FROM tbl_application";
+
+		if ($gender != ''){
+			$stmt = "SELECT 
+			SUM(CASE WHEN `Age` >= 18 AND `Age` <= 25 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '18 to 25',
+			SUM(CASE WHEN `Age` >= 26 AND `Age` <= 30 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '26 to 30',
+			SUM(CASE WHEN `Age` >= 31 AND `Age` <= 35 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '31 to 35',
+			SUM(CASE WHEN `Age` >= 36 AND `Age` <= 42 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '36 to 42',
+			SUM(CASE WHEN `Age` >= 43 AND `Age` <= 50 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '43 to 50',
+			SUM(CASE WHEN `Age` >= 51 AND `Gender` = '".$gender."' THEN 1 ELSE 0 END) as '51 and up'
+			FROM tbl_application";
+		}
 
 		$result = $this->con->query($stmt);
 		$temp = array();
@@ -248,13 +319,23 @@ class Operations
 		return $temp;
 	}
 
-	function getAllJobTitle(){
+	function getAllJobTitle($gender){
 		$stmt = "SELECT 
 		DISTINCT position, 
 		COUNT(position) AS 'Total'
 		FROM tbl_application 
 		GROUP BY position 
 		ORDER BY `total` DESC";
+
+		if($gender != ''){
+			$stmt = "SELECT 
+			DISTINCT position, 
+			COUNT(position) AS 'Total'
+			FROM tbl_application 
+			WHERE `Gender` = '".$gender."'
+			GROUP BY position 
+			ORDER BY `total` DESC";
+		}
 
 		$result = $this->con->query($stmt);
 		$temp = array();

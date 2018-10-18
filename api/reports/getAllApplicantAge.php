@@ -5,10 +5,10 @@ include '../../constants/Operations.php';
 // Create an array
 $response = array();
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$db = new Operations();
-	$result = $db->getAllApplicantAge();
+	$result = $db->getAllApplicantAge($_POST['gender']);
 
 	$response['error'] = false;
 	$response['age'] = $result;
