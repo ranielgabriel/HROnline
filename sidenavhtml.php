@@ -26,7 +26,7 @@
 	<center>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="#sideNavCollapse" data-toggle="collapse"><h5>Lists</h5></a>
 	<div id="sideNavCollapse" class="collapse">
-	<a class="navi" style="text-align: left;border-bottom: 2px solid;border-top: 2px solid" href="google.php?id='.$id.'"><h5 class="col-sm-offset-1">Application List</h5></a>
+	<a class="navi" style="text-align: left;border-bottom: 2px solid;border-top: 2px solid" href="google.php?id='.$id.'"><h5 class="col-sm-offset-1">Application Status</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="applicants.php?id='.$id.'"><h5 class="col-sm-offset-1">Applicant List</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="quick_applicants_list.php?id='.$id.'"><h5 class="col-sm-offset-1">Quick Apply Applicants</h5></a>
 	<a class="navi" style="text-align: left;border-bottom: 2px solid" href="view_authorization_list.php?id='.$id.'"><h5 class="col-sm-offset-1">General List</h5></a>

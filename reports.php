@@ -89,7 +89,6 @@
                 </div>
             </nav>
         </div>
-        <hr style="background-color: #000;">
         <h2 class="text-center">Filters</h2>
         <div id='adjustDate' style='background-color: #dfe5ec;'>
             <div class='row'>
@@ -105,7 +104,7 @@
                                         <i class="fa fa-calendar">
                                         </i>
                                     </div>
-                                    <input class="form-control" id="dateStart" name="date" type="date">
+                                    <input class="form-control" id="dateStart" type="date">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" id="dateEnd" name="date" type="date">
+                                    <input class="form-control" id="dateEnd" type="date">
                                 </div>
                             </div>
                         </div>
@@ -131,12 +130,13 @@
                 <div class="bootstrap-iso">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="form-group" style="margin-bottom:2%;">
-                            <label for="selectGender" style='color:black;'>Select Genderx</label>
+                            <label for="selectGender" style='color:black;'>Select Gender</label>
                             <select class="form-control" id="selectGender">
                                 <option selected disabled>Choose a gender...</option>
+                                <option>Male and Female</option>
                                 <option>Male</option>
                                 <option>Female</option>
-                                <option>Other</option>
+                                <option>Others</option>
                             </select>
                         </div>
                     </div>
