@@ -8,7 +8,7 @@ $response = array();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$db = new Operations();
-	$result = $db->getAllApplicantAge($_POST['gender']);
+	$result = $db->getAllApplicantAge($_POST['gender'], $_POST['startDate'], $_POST['endDate']);
 
 	$response['error'] = false;
 	$response['age'] = $result;

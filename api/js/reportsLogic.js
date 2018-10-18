@@ -3,100 +3,75 @@ $(document).ready(function () {
 
     getAllMonthlyApplicant('');
     getAllDailyApplicant('');
-    getAllApplicantSource('');
-    getAllApplicantAge('');
-    getAllApplicantStatus('');
-    getAllJobTitle('');
-    getAllApplicantLocation('Map', '');
+    getAllApplicantSource(gender, startDate, endDate);
+    getAllApplicantAge(gender, startDate, endDate);
+    getAllApplicantStatus(gender, startDate, endDate);
+    getAllJobTitle(gender, startDate, endDate);
+    getAllApplicantLocation('Map', gender, startDate, endDate);
 
     $('#btnMapView').click(function () {
-        getAllApplicantLocation('Map', $('#selectGender').val());
+        getAllApplicantLocation('Map', gender, startDate, endDate);
         $(this).addClass('active');
         $('#btnGraphView').removeClass('active');
     });
 
     $('#btnGraphView').click(function () {
-        getAllApplicantLocation('Graph', $('#selectGender').val());
+        getAllApplicantLocation('Graph', gender, startDate, endDate);
         $(this).addClass('active');
         $('#btnMapView').removeClass('active');
     });
 
-    $('#dateStart').change(function (){
-        console.log($(this).val());
-    });
-    
-    $('#dateEnd').change(function (){
-        console.log($(this).val());
+    $('#dateStart').change(function () {
+        startDate = $(this).val();
+        filterReports();
     });
 
-    $('#selectGender').change(function (){
-        var gender = $(this).val();
-        switch (gender) {
+    $('#dateEnd').change(function () {
+        endDate = $(this).val();
+        filterReports();
+    });
+
+    $('#selectGender').change(function () {
+        switch ($(this).val()) {
             case 'Male':
-            getAllMonthlyApplicant('Male');
-            getAllApplicantAge('Male');
-            getAllJobTitle('Male');
-            getAllDailyApplicant('Male');
-            getAllApplicantSource('Male');
-            getAllApplicantStatus('Male');
-            getAllApplicantLocation('Map', 'Male');
-            $('#btnMapView').addClass('active');
-            $('#btnGraphView').removeClass('active');
-
-            break;
+                gender = 'Male';
+                break;
 
             case 'Female':
-            getAllMonthlyApplicant('Female');
-            getAllApplicantAge('Female');
-            getAllJobTitle('Female');
-            getAllDailyApplicant('Female');
-            getAllApplicantSource('Female');
-            getAllApplicantStatus('Female');
-            getAllApplicantLocation('Map', 'Female');
-            $('#btnMapView').addClass('active');
-            $('#btnGraphView').removeClass('active');
-            break;
+                gender = 'Female';
+                break;
 
             case 'Other':
-            getAllMonthlyApplicant('Preferred not to answer');
-            getAllApplicantAge('Preferred not to answer');
-            getAllJobTitle('Preferred not to answer');
-            getAllDailyApplicant('Preferred not to answer');
-            getAllApplicantSource('Preferred not to answer');
-            getAllApplicantStatus('Preferred not to answer');
-            getAllApplicantLocation('Map', 'Preferred not to answer');
-            $('#btnMapView').addClass('active');
-            $('#btnGraphView').removeClass('active');
-            break;
+                gender = 'Preferred not to answer';
+                break;
 
             case 'Any':
-            getAllMonthlyApplicant('');
-            getAllApplicantAge('');
-            getAllJobTitle('');
-            getAllDailyApplicant('');
-            getAllApplicantSource('');
-            getAllApplicantStatus('');
-            getAllApplicantLocation('Map', '');
-            $('#btnMapView').addClass('active');
-            $('#btnGraphView').removeClass('active');
-
-            break;
+                gender = '';
+                break;
 
             default:
-            getAllMonthlyApplicant('');
-            getAllApplicantAge('');
-            getAllJobTitle('');
-            getAllDailyApplicant('');
-            getAllApplicantSource('');
-            getAllApplicantStatus('');
-            getAllApplicantLocation('Map', '');
-            $('#btnMapView').addClass('active');
-            $('#btnGraphView').removeClass('active');
-
-            break;
+                gender = '';
+                break;
         }
+        filterReports();
     });
 });
+
+var gender = '', startDate = '', endDate = '';
+
+function filterReports() {
+    if (startDate != '' && endDate != '') {
+        getAllApplicantAge(gender, startDate, endDate);
+        getAllJobTitle(gender, startDate, endDate);
+        getAllApplicantSource(gender, startDate, endDate);
+        getAllApplicantStatus(gender, startDate, endDate);
+        getAllDailyApplicant(gender);
+        getAllMonthlyApplicant(gender);
+        getAllApplicantLocation('Map', gender, startDate, endDate);
+        $('#btnMapView').addClass('active');
+        $('#btnGraphView').removeClass('active');
+    }
+}
 
 function getAllMonthlyApplicant(gender) {
     $.ajax({
@@ -318,12 +293,14 @@ function getAllDailyApplicant(gender) {
     });
 }
 
-function getAllJobTitle(gender) {
+function getAllJobTitle(gender, startDate, endDate) {
     $.ajax({
         url: 'api/reports/getAllJobTitle.php',
         type: 'POST',
         data: {
-            gender: gender
+            gender: gender,
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (msg) {
 
@@ -361,15 +338,16 @@ function getAllJobTitle(gender) {
     });
 }
 
-function getAllApplicantAge(gender) {
+function getAllApplicantAge(gender, startDate, endDate) {
     $.ajax({
         url: 'api/reports/getAllApplicantAge.php',
         type: 'POST',
         data: {
-            gender: gender
+            gender: gender,
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (msg) {
-            console.log(msg);
             // Age Bracket Chart
             google.charts.load("current", {
                 packages: ['corechart']
@@ -435,12 +413,14 @@ function getAllApplicantAge(gender) {
     });
 }
 
-function getAllApplicantStatus(gender) {
+function getAllApplicantStatus(gender, startDate, endDate) {
     $.ajax({
         url: 'api/reports/getAllApplicantStatus.php',
         type: 'POST',
         data: {
-            gender: gender
+            gender: gender,
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (msg) {
 
@@ -490,12 +470,14 @@ function getAllApplicantStatus(gender) {
     });
 }
 
-function getAllApplicantSource(gender) {
+function getAllApplicantSource(gender, startDate, endDate) {
     $.ajax({
         url: 'api/reports/getAllApplicantSource.php',
         type: 'POST',
         data: {
-            gender: gender
+            gender: gender,
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (msg) {
 
@@ -545,12 +527,15 @@ function getAllApplicantSource(gender) {
     });
 }
 
-function getAllApplicantLocation(viewType, gender) {
+function getAllApplicantLocation(viewType, gender, startDate, endDate) {
+    
     $.ajax({
         url: 'api/reports/getAllApplicantLocation.php',
         type: 'POST',
         data: {
-            gender: gender
+            gender: gender,
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (msg) {
             if (viewType == 'Map') {
@@ -708,18 +693,18 @@ function getLatLng(location) {
             latlng[0] = 14.5176;
             latlng[1] = 121.0509;
             return latlng;
-        
-        // CENTRAL LUZON
+
+            // CENTRAL LUZON
         case 'Central Luzon':
             latlng[0] = 15.4828;
             latlng[1] = 120.7120;
             return latlng;
-        
-        // CALABARZON
+
+            // CALABARZON
         case 'Cavite':
-        latlng[0] = 14.2456;
-        latlng[1] = 120.8786;
-        return latlng;
+            latlng[0] = 14.2456;
+            latlng[1] = 120.8786;
+            return latlng;
         case 'Rizal':
             latlng[0] = 14.6037;
             latlng[1] = 121.3084;
@@ -729,70 +714,70 @@ function getLatLng(location) {
             latlng[1] = 121.4692;
             return latlng;
         case 'Batangas':
-        latlng[0] = 13.9450;
-        latlng[1] = 121.1312;
-        return latlng;
+            latlng[0] = 13.9450;
+            latlng[1] = 121.1312;
+            return latlng;
         case 'Quezon':
             latlng[0] = 13.9347;
             latlng[1] = 121.9473;
             return latlng;
 
-        // case 'Ilocos Region':
-        //     latlng[0] = 16.0832;
-        //     latlng[1] = 120.6200;
-        //     return latlng;
-        // case 'Cagayan Valley':
-        //     latlng[0] = 16.9754;
-        //     latlng[1] = 121.8107;
-        //     return latlng;
-        // case 'MIMARO':
-        //     latlng[0] = 9.8432;
-        //     latlng[1] = 118.7365;
-        //     return latlng;
-        // case 'Bicol Region':
-        //     latlng[0] = 13.4210;
-        //     latlng[1] = 123.4137;
-        //     return latlng;
-        // case 'Western Visayas':
-        //     latlng[0] = 11.0050;
-        //     latlng[1] = 122.5373;
-        //     return latlng;
-        // case 'Central Visayas':
-        //     latlng[0] = 9.8169;
-        //     latlng[1] = 124.0641;
-        //     return latlng;
-        // case 'Eastern Visayas':
-        //     latlng[0] = 12.2446;
-        //     latlng[1] = 125.0388;
-        //     return latlng;
-        // case 'Zamboanga Peninsula':
-        //     latlng[0] = 8.1541;
-        //     latlng[1] = 123.2588;
-        //     return latlng;
-        // case 'Northern Mindanao':
-        //     latlng[0] = 8.0202;
-        //     latlng[1] = 124.6857;
-        //     return latlng;
-        // case 'Davao Region':
-        //     latlng[0] = 7.1907;
-        //     latlng[1] = 125.4553;
-        //     return latlng;
-        // case 'SOCCSKSARGEN':
-        //     latlng[0] = 6.2707;
-        //     latlng[1] = 124.6857;
-        //     return latlng;
-        // case 'CARAGA':
-        //     latlng[0] = 8.8015;
-        //     latlng[1] = 125.7407;
-        //     return latlng;
-        // case 'ARMM':
-        //     latlng[0] = 6.9568;
-        //     latlng[1] = 124.2422;
-        //     return latlng;
-        // case 'CAR':
-        //     latlng[0] = 17.3513;
-        //     latlng[1] = 121.1719;
-        //     return latlng;
+            // case 'Ilocos Region':
+            //     latlng[0] = 16.0832;
+            //     latlng[1] = 120.6200;
+            //     return latlng;
+            // case 'Cagayan Valley':
+            //     latlng[0] = 16.9754;
+            //     latlng[1] = 121.8107;
+            //     return latlng;
+            // case 'MIMARO':
+            //     latlng[0] = 9.8432;
+            //     latlng[1] = 118.7365;
+            //     return latlng;
+            // case 'Bicol Region':
+            //     latlng[0] = 13.4210;
+            //     latlng[1] = 123.4137;
+            //     return latlng;
+            // case 'Western Visayas':
+            //     latlng[0] = 11.0050;
+            //     latlng[1] = 122.5373;
+            //     return latlng;
+            // case 'Central Visayas':
+            //     latlng[0] = 9.8169;
+            //     latlng[1] = 124.0641;
+            //     return latlng;
+            // case 'Eastern Visayas':
+            //     latlng[0] = 12.2446;
+            //     latlng[1] = 125.0388;
+            //     return latlng;
+            // case 'Zamboanga Peninsula':
+            //     latlng[0] = 8.1541;
+            //     latlng[1] = 123.2588;
+            //     return latlng;
+            // case 'Northern Mindanao':
+            //     latlng[0] = 8.0202;
+            //     latlng[1] = 124.6857;
+            //     return latlng;
+            // case 'Davao Region':
+            //     latlng[0] = 7.1907;
+            //     latlng[1] = 125.4553;
+            //     return latlng;
+            // case 'SOCCSKSARGEN':
+            //     latlng[0] = 6.2707;
+            //     latlng[1] = 124.6857;
+            //     return latlng;
+            // case 'CARAGA':
+            //     latlng[0] = 8.8015;
+            //     latlng[1] = 125.7407;
+            //     return latlng;
+            // case 'ARMM':
+            //     latlng[0] = 6.9568;
+            //     latlng[1] = 124.2422;
+            //     return latlng;
+            // case 'CAR':
+            //     latlng[0] = 17.3513;
+            //     latlng[1] = 121.1719;
+            //     return latlng;
         default:
             latlng[0] = 'none';
             latlng[1] = 'none';
