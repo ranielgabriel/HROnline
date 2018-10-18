@@ -41,11 +41,11 @@ $(document).ready(function () {
                 gender = 'Female';
                 break;
 
-            case 'Other':
+            case 'Others':
                 gender = 'Preferred not to answer';
                 break;
 
-            case 'Any':
+            case 'Male and Female':
                 gender = '';
                 break;
 

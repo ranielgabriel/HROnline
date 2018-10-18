@@ -133,10 +133,10 @@
                             <label for="selectGender" style='color:black;'>Select Gender</label>
                             <select class="form-control" id="selectGender">
                                 <option selected disabled>Choose a gender...</option>
-                                <option>Any</option>
+                                <option>Male and Female</option>
                                 <option>Male</option>
                                 <option>Female</option>
-                                <option>Other</option>
+                                <option>Others</option>
                             </select>
                         </div>
                     </div>
