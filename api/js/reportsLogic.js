@@ -1,7 +1,7 @@
 $(document).ready(function () {
     console.log('Page is ready.');
 
-    getAllMonthlyApplicant();
+    getAllMonthlyApplicant('');
     getAllDailyApplicant();
     getAllApplicantSource();
     getAllApplicantAge();
@@ -20,12 +20,48 @@ $(document).ready(function () {
         $(this).addClass('active');
         $('#btnMapView').removeClass('active');
     });
+
+    $('#dateStart').change(function (){
+        console.log($(this).val());
+    });
+    
+    $('#dateEnd').change(function (){
+        console.log($(this).val());
+    });
+
+    $('#selectGender').change(function (){
+        var gender = $(this).val();
+        switch (gender) {
+            case 'Male':
+            getAllMonthlyApplicant('Male');
+            break;
+
+            case 'Female':
+            getAllMonthlyApplicant('Female');
+            break;
+
+            case 'Other':
+            getAllMonthlyApplicant('Preferred not to answer');
+            break;
+
+            case 'Both':
+            getAllMonthlyApplicant('');
+            break;
+
+            default:
+            getAllMonthlyApplicant('');
+            break;
+        }
+    });
 });
 
-function getAllMonthlyApplicant() {
+function getAllMonthlyApplicant(gender) {
     $.ajax({
         url: 'api/reports/getAllMonthlyApplicant.php',
-        type: 'GET',
+        type: 'POST',
+        data: {
+            gender: gender
+        },
         success: function (msg) {
             google.charts.load('current', {
                 packages: ['corechart', 'bar']
